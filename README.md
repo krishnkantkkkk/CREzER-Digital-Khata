@@ -12,3 +12,5 @@ The CREzER is a web application designed to simplify the process of managing out
   <li>Record Outstanding Bills: Shopkeepers can easily input customer names and the corresponding amount due.</li>
   <li>Track Payments: Keep track of pending payments and manage them efficiently.</li>
 </ul>
+<h2><b>Get Started</b></h2>
+Experience the convenience of managing your shop's billing process effortlessly. Join us and streamline your billing management today!
