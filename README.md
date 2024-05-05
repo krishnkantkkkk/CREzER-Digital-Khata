@@ -7,7 +7,7 @@ The CREzER is a web application designed to simplify the process of managing out
   <li>User-Friendly Interface: Intuitive design for easy navigation and usage.</li>
   <li>Enhanced Efficiency: Save time and reduce errors with our automated billing system.</li>
 </ul>
-## How it Works:
+<b>How it Works:</b>
 <ul>
   <li>Record Outstanding Bills: Shopkeepers can easily input customer names and the corresponding amount due.</li>
   <li>Track Payments: Keep track of pending payments and manage them efficiently.</li>
