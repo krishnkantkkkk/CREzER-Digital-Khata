@@ -18,14 +18,24 @@ Experience the convenience of managing your shop's billing process effortlessly.
 <h3><b>Download and Install XAMPP:</b></h3>
 If you haven't already, download and install XAMPP from the official website: <a href="https://www.apachefriends.org/">XAMPP Download Page</a>.
 Follow the installation instructions provided for your operating system.
+
 <h3><b>Start XAMPP:</b></h3>
 After installation, open the XAMPP Control Panel.
 Start the Apache server by clicking the "Start" button next to "Apache".
+
+<h3><b>Download PHP Files from GitHub:</b></h3>
+Visit the GitHub repository where the Khata files are hosted.
+Click on the "Code" button and select "Download ZIP" to download the repository as a ZIP file.
+Extract the contents of the ZIP file to a folder on your computer.
+Enter into the extracted file and move the Khata folder to the C:/xampp/htdocs/ directory.
+
 <h3><b>Place PHP Files:</b></h3>
 Place the PHP files you uploaded into the appropriate directory within the XAMPP installation. By default, this is the htdocs directory. You can find this directory inside the XAMPP installation folder.
+
 <h3><b>Access Localhost:</b></h3>
 Open a web browser.
 In the address bar, type http://localhost/ and press Enter.
 If your PHP files are placed directly in the htdocs directory, you can access them by typing http://localhost/Khata/index.php.
+
 <h3><b>View PHP Output:</b></h3>
 The PHP file will be executed by the server, and you will see the output in the browser.
