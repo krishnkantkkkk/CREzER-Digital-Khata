@@ -1,6 +1,7 @@
 <?php
     ob_start();
     require_once("data.php");
+    if(mysqli_num_rows($logged_in->query("select * from username"))) header("Location:main.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@
             <p id="error"></p>
             <form id="register_container" class="rlogin_box" method="post">
                 <h1>REGISTER</h1>
-                <input type="text" name="username" placeholder="Username" autocomplete="off" required>
+                <input id="register_username1" type="text" name="username" placeholder="Username" autocomplete="off" required>
                 <input type="text" name="name" placeholder="Name" autocomplete="off" required>
                 <input type="email" name="email" placeholder="Email" autocomplete="off" required>
                 <input type="password" name="password" placeholder="Password" autocomplete="off" required>
@@ -65,6 +66,7 @@
         let error = document.getElementById("error");
         register_container.onclick =function(){error.innerText=""};
         login_container.onclick =function(){error.innerText=""};
+        document.getElementById("register_username1").focus();
 
         function login()
         {
@@ -96,7 +98,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $cpassword = $_POST['confirmPass'];
-        $check_username = $con->query("select * from usernames where username =  '$username'");
+        $check_username = $users->query("select * from usernames where username =  '$username'");
 
             if(mysqli_num_rows($check_username)) 
             {
@@ -112,8 +114,9 @@
             {
                 if($password === $cpassword)
                 {
-                    $con->query("insert into usernames values(NULL, '$username', '$name', '$email', '$password')");
-                    $con->query("CREATE TABLE $username (Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, Name VARCHAR(50), Amount INT);");
+                    $users->query("insert into usernames values(NULL, '$username', '$name', '$email', '$password')");
+                    $users_borrowers->query("CREATE TABLE $username (Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, Name VARCHAR(50), Amount INT);");
+                    $logged_in->query("insert into username values('$username')");
                     header("Location:main.php?username=$username");
                     ob_end_flush();
                 }
@@ -135,13 +138,14 @@
         $username = $_POST["login_username"];
         $password = $_POST["login_password"];
 
-        $check_username = $con->query("select * from usernames where username = '$username'");
+        $check_username = $users->query("select * from usernames where username = '$username'");
         if(mysqli_num_rows($check_username))
         {
-            $check_password = mysqli_fetch_assoc($con->query("select * from usernames where username = '$username'"))["password"];
+            $check_password = mysqli_fetch_assoc($users->query("select * from usernames where username = '$username'"))["password"];
             if($password === $check_password)
             {
-                header("Location:main.php?username=$username");
+                $logged_in->query("insert into username values('$username')");
+                header("Location:main.php");
                 ob_end_flush();
             }
             else 

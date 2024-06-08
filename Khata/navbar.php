@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,7 +35,7 @@
             <form id="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
             <div id="search_icon"><img id="search_icon_image" src="./images/search-icon.svg" alt=""></div>
             <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"></p></div>
-            <div id="get_started_button">Get Started</div>
+            <button id="get_started_button">Get Started</button>
         </div>
     </nav>
 </body>
@@ -40,58 +45,5 @@
     document.getElementById("search").style = "display:none;";
     document.getElementById("search_icon").style = "display:none;";
     document.getElementById("user").style = "display:none;";
-
-    function slide(id) {
-    var shiftLength = 0;
-    if(id=="home"){
-        window.location.href="index.php#introScroller";
-        shiftLength = 0;
-    }else if(id=="usecase"){
-        window.location.href="index.php#usecaseScroller";
-        shiftLength = 75;
-    }else if(id=="about"){
-        window.location.href="index.php#aboutScroller";
-        shiftLength = 150;
-    }else{
-        window.location.href="index.php#contactScroller";
-        shiftLength = 225;
-    }
-    div.style.transform = `translateX(${shiftLength}px)`;
-}
-
-
-    // scroll 
-    function isInViewport(element) {
-  var rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
-
-// Function to handle scroll event
-function handleScroll() {
-  var useCase = document.getElementById("useCase");
-  var home =document.getElementById("intro");
-  var about =document.getElementById("about-section");
-  var contact =document.getElementById("contact-section");
-  if (isInViewport(useCase)) {
-    document.getElementById("slider").style.transform = `translateX(75px)`;
-  }else if(isInViewport(home)){
-    document.getElementById("slider").style.transform = "translateX(0px)"
-  }else if(isInViewport(about)){
-    document.getElementById("slider").style.transform = "translateX(150px)"
-  }else if(isInViewport(contact)){
-    document.getElementById("slider").style.transform = "translateX(225px)"
-  }
-}
-
-// Add scroll event listener
-window.addEventListener('scroll', handleScroll);
-
-// Initial check on page load
-handleScroll();
 </script>
 </html>

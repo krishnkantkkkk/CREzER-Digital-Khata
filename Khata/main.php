@@ -1,9 +1,12 @@
 <?php
     ob_start();
-    require_once('./data.php');
-    $table = $_GET['username'];
+    require_once('data.php');
+    $table = "";
+    if(mysqli_num_rows($logged_in->query("select * from username")))
+        $table = mysqli_fetch_assoc($logged_in->query("select * from username"))['username'];
+    else header("Location:register.php");
     $query = "select * from $table";
-    $result = mysqli_query($con, $query);
+    $result = mysqli_query($users_borrowers, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +78,7 @@
         let popup_close_button = document.getElementById("popup_close_button");
         let user_name = document.getElementById("user_name");
 
-        user_name.innerText = '<?php echo mysqli_fetch_assoc($con->query("select * from usernames where username='$table'"))['name'] ?>';
+        user_name.innerText = '<?php echo mysqli_fetch_assoc($users->query("select * from usernames where username='$table'"))['name'] ?>';
 
         function createPopup()
         {
@@ -135,13 +138,15 @@
         }
 
         // Navbar
-        document.getElementById("get_started_button").innerText = "Log Out";
+        var logout = document.getElementById("get_started_button")
+        logout.innerText = "Log Out";
+        logout.onclick = function(){
+            window.location.href = "?logout=<?= $table ?>";
+        }
+
         document.getElementById("search").style = "display:inline;";
         document.getElementById("search_icon").style = "display:inline;";
         document.getElementById("user").style = "display:flex;";
-        document.getElementById("get_started_button").onclick =function(){
-            window.location.href = "http://localhost/khata/index.php";
-        }
         document.getElementById("search_icon_image").onclick =function(){
             var username = document.getElementById("input_search").value;
             window.location.href = "main.php?username=<?php echo $table ?>" +`&search=${username}`;
@@ -161,7 +166,7 @@
         $createQuery = "insert into $table values(null, '{$name}', {$amount})";
         if($name != "" && $amount != null)
         {
-            mysqli_query($con, $createQuery);
+            mysqli_query($users_borrowers, $createQuery);
             header("Refresh:0");
             ob_end_flush(); 
         }
@@ -172,13 +177,13 @@
         $id = $_POST['id'];
         $amount = $_POST['amount'];
         $removeQuery = "update $table set Amount= Amount-{$amount} where Id={$id};";
-        $check_amount = mysqli_fetch_assoc($con->query("select Amount from $table where id={$id}"))['Amount'];
+        $check_amount = mysqli_fetch_assoc($users_borrowers->query("select Amount from $table where id={$id}"))['Amount'];
         if($amount != null)
         {
             if((int)$check_amount - $amount >= 0)
             {
-                if((int)$check_amount-$amount==0) $con->query("delete from $table where Id = {$id}");
-                else mysqli_query($con, $removeQuery);
+                if((int)$check_amount-$amount==0) $users_borrowers->query("delete from $table where Id = {$id}");
+                else mysqli_query($users_borrowers, $removeQuery);
                 header("Refresh:0");
                 ob_end_flush();
             }
@@ -191,7 +196,7 @@
         $removeQuery = "update $table set Amount= Amount+{$amount} where Id={$id};";
         if($amount!=null)
         {
-            mysqli_query($con, $removeQuery);
+            mysqli_query($users_borrowers, $removeQuery);
             header("Refresh:0");
             ob_end_flush();
         }
@@ -202,8 +207,14 @@
     {
         $id = $_GET['delId'];
         echo $id;
-        $con->query("delete from $table where Id ={$id}");
+        $users_borrowers->query("delete from $table where Id ={$id}");
         header("Location:main.php?username=$table");
         ob_end_flush();
+    }
+
+    if(isset($_GET['logout'])) 
+    {
+        $logged_in->query("DELETE FROM USERNAME");
+        header("Location:index.php");
     }
 ?>
