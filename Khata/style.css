@@ -741,11 +741,11 @@ th{
     height: 80px;
     margin: 5px;
     padding: 10px;
-    transition: 0.5s ease-in-out;
+    transition: 0.2s ease-in-out;
 }
 
 #qualification img:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 #qualification{

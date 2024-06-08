@@ -86,10 +86,16 @@
             <div id="row1">
                 <img src="images/html.svg" alt="" title="HTML">
                 <img src="images/css.svg" alt="" title="CSS">
+                <img src="images/js.svg" alt="" title="JAVASCRIPT">
             </div>
-            <img src="images/python.svg" alt="" title="PYTHON">
-            <div id="row3">
+            <div id="row2">
+                <img src="images/django.svg" alt="" title="DJANGO">
+                <img src="images/php.svg" alt="" title="PHP">
                 <img src="images/sql.svg" alt="" title="SQL">
+            </div>
+            <div id="row3">
+                <img src="images/python.svg" alt="" title="PYTHON">
+                <img src="images/git.svg" alt="" title="GIT">
                 <img src="images/solidity.svg" alt="" title="SOLIDITY">
             </div>
         </div>
