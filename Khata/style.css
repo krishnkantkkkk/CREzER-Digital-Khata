@@ -545,6 +545,7 @@ main {
 
 #count {
     color: var(--color1);
+    height: 3rem;
     font-size: 3rem;
     margin: 0;
     padding: 0;

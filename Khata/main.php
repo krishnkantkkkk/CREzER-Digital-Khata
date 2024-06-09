@@ -167,6 +167,8 @@
         if($name != "" && $amount != null)
         {
             mysqli_query($users_borrowers, $createQuery);
+            $borrower_id = (int)mysqli_fetch_assoc($users_borrowers->query("SELECT max(id) from $table"))['max(id)'];
+            $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $borrower_id, $amount, '+', now())");
             header("Refresh:0");
             ob_end_flush(); 
         }
@@ -178,6 +180,7 @@
         $amount = $_POST['amount'];
         $removeQuery = "update $table set Amount= Amount-{$amount} where Id={$id};";
         $check_amount = mysqli_fetch_assoc($users_borrowers->query("select Amount from $table where id={$id}"))['Amount'];
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '-', now())");
         if($amount != null)
         {
             if((int)$check_amount - $amount >= 0)
@@ -193,10 +196,11 @@
     {
         $id = $_POST['id'];
         $amount = $_POST['amount'];
-        $removeQuery = "update $table set Amount= Amount+{$amount} where Id={$id};";
+        $addQuery = "update $table set Amount= Amount+{$amount} where Id={$id};";
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '+', now())");
         if($amount!=null)
         {
-            mysqli_query($users_borrowers, $removeQuery);
+            mysqli_query($users_borrowers, $addQuery);
             header("Refresh:0");
             ob_end_flush();
         }
@@ -206,9 +210,9 @@
     if(isset($_GET['delId']))
     {
         $id = $_GET['delId'];
-        echo $id;
         $users_borrowers->query("delete from $table where Id ={$id}");
-        header("Location:main.php?username=$table");
+        $transactions->query("DELETE FROM TRANSACTION WHERE lender_username='$table' AND borrower_id = '$id'");
+        header("Location:main.php");
         ob_end_flush();
     }
 
