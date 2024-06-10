@@ -174,15 +174,16 @@ input:focus {
     background: var(--color3);
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 }
 
 #popup_close_button {
     height: 25px;
-    position: relative;
-    top: -15px;
-    left: 305px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
 }
 
@@ -190,18 +191,17 @@ input:focus {
     color: var(--color4);
 }
 
-#popup {
+#popup_form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    transform: translateY(-50px);
 }
 
 
 
-#popup input {
+#popup_form input {
     width: 250px;
     border-radius: 5px;
     border: none;

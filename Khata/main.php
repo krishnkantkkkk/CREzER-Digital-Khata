@@ -53,7 +53,7 @@
         <div id="popup_background">
             <div id="popup_container">
             <img src="./images/close-button-svgrepo-com.svg" id="popup_close_button" onclick="popdown()">
-                <form id="popup" method="post">
+                <form id="popup_form" method="post">
                     <h1 id="command_text"></h1>
                     <input type="text" name="id" id="hidden_input" autocomplete="off">
                     <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required>
@@ -70,7 +70,7 @@
         let inputName = document.getElementById("name_input");
         let inputAmount = document.getElementById("amount_input");
         let targetButton = document.getElementById("buttons");
-        let targetInput = document.getElementById("popup");
+        let targetInput = document.getElementById("popup_form");
         let targetPopup = document.getElementById("body")
         let confirm_button = document.getElementById("confirm_button");
         let cancel_button = document.getElementById("cancel_button");
@@ -95,8 +95,6 @@
         function popdown()
         {
             targetPopup.removeChild(pop);
-            popup_container.style = "display : inline;";
-            popup_close_button.style = "top : -15px; left : 305px";
         }
 
         let decreases = document.querySelectorAll('.modify_button');
@@ -121,7 +119,6 @@
         {
             targetPopup.appendChild(pop);
             popup_container.style = "display : grid;";
-            popup_close_button.style = "top : -36px; left : 303px";
             targetButton.innerHTML = "";
             if(targetInput.querySelector("#name_input")) targetInput.removeChild(inputName);
             if(targetInput.querySelector("#amount_input")) targetInput.removeChild(inputAmount);
