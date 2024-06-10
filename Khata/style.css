@@ -4,6 +4,7 @@
     --color3: #31363F;
     --color4: #fff;
     --color5: #37d7aa;
+    --color6: #40454e;
     --card_color: #272d37;
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -150,11 +151,11 @@ input:focus {
 }
 
 #plus {
-    color: grey;
+    color: gray;
     font-size: 3rem;
 }
 
-#popup_background {
+.popup_background {
     margin: 0;
     padding: 0;
     display: flex;
@@ -165,10 +166,10 @@ input:focus {
     width: 100%;
     height: 100vh;
     position: absolute;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(1px);
 }
 
-#popup_container {
+.popup_container {
     width: 350px;
     height: 350px;
     background: var(--color3);
@@ -177,7 +178,7 @@ input:focus {
     position: relative;
 }
 
-#popup_close_button {
+.popup_close_button {
     height: 25px;
     position: absolute;
     top: 10px;
@@ -187,11 +188,10 @@ input:focus {
     cursor: pointer;
 }
 
-#command_text {
-    color: var(--color4);
-}
-
-#popup_form {
+.popup_form {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -199,9 +199,11 @@ input:focus {
     border-radius: 10px;
 }
 
+.command_text {
+    color: var(--color4);
+}
 
-
-#popup_form input {
+.popup_form input {
     width: 250px;
     border-radius: 5px;
     border: none;
@@ -217,12 +219,54 @@ input:focus {
     display: none;
 }
 
+.transaction
+{
+    height: 90%;
+    padding: 0;
+}
+
+.transaction h2
+{
+    text-align: center;
+    color: var(--color4);
+}
+
+.transactions_table
+{
+    height: 80%;
+    overflow-y: overlay;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.transaction_box{
+    box-shadow: var(--shadow);
+    background-color: var(--color2);
+    border-radius: 5px;
+    width: 90%;
+    margin: 4.84px 0;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction_box div
+{
+    margin: 0;
+    padding: 0;
+}
+
+.transaction_amount1{color:var(--color1);}
+.transaction_amount2{color:#ff9945;}
+
 ::-webkit-scrollbar {
     width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color3);
+    background: var(--color6);
     border-radius: 10px;
 }
 
@@ -231,20 +275,22 @@ input:focus {
 
 
 /* edited */
-#slider-menu{
+#slider-menu {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-#slide{
+
+#slide {
     height: 5px;
     margin: 0px;
     padding: 0px 20px;
-    width: 100% ;
+    width: 100%;
 }
-#slider{
+
+#slider {
 
     height: 2px;
     border-radius: 3px;
@@ -254,6 +300,7 @@ input:focus {
     background-color: #37d7aa;
     transition: all 0.3s ease-in-out;
 }
+
 /* end */
 
 nav {
@@ -551,7 +598,7 @@ main {
     padding: 0;
 }
 
-#sign_up{
+#sign_up {
     margin: 0;
     margin-top: 10px;
 }
@@ -563,7 +610,7 @@ main {
     border-radius: 5px;
 }
 
-#data_content{
+#data_content {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -571,8 +618,8 @@ main {
     align-items: center;
 }
 
-.card{
-    width : 450px;
+.card {
+    width: 450px;
     background: var(--card_color);
     height: 300px;
     box-shadow: var(--shadow);
@@ -583,68 +630,67 @@ main {
     align-items: center;
 }
 
-#recent_users p{
-    color : white;
+#recent_users p {
+    color: white;
     font-size: 2.5rem;
     margin: 0;
 }
 
-#table_container
-{
+#table_container {
     margin: 0;
     padding: 0;
     height: 200px;
 }
 
-table{
-    color : white;
+table {
+    color: white;
 }
 
-th,td
-{
+th,
+td {
     width: 210px;
     min-width: 210px;
     text-align: center;
 }
 
-th{
+th {
     color: var(--color5);
     font-size: 1.1rem;
     font-weight: 300;
 }
 
-#analytics{
+#analytics {
     flex-direction: row;
 }
 
-#analytics p span{
-    color : var(--color1);
+#analytics p span {
+    color: var(--color1);
     font-family: "Merienda";
     font-weight: 900;
     margin: 0;
     padding: 0;
 }
 
-#analytics p{
+#analytics p {
     color: var(--color4);
     margin: 0 10px 0 0;
     padding: 0;
     font-size: 1.91rem;
 }
 
-#analytics img{
+#analytics img {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-#useCase{
+#useCase {
     position: relative;
     justify-content: center;
     align-items: center;
 }
 
-.heading{
+.heading {
     position: absolute;
     top: 0;
     margin: 0;
@@ -656,24 +702,25 @@ th{
     font-weight: 700;
 }
 
-.heading p{
+.heading p {
     font-size: 3rem;
 }
 
-#useCase img{
+#useCase img {
     height: 500px;
 }
 
-#to{
-    position:absolute;
+#to {
+    position: absolute;
     transform: translateX(-60px);
 }
 
-#to img{
+#to img {
     width: 200px;
 }
 
-#digital, #physical{
+#digital,
+#physical {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -681,20 +728,22 @@ th{
     align-items: center;
 }
 
-#physical p, #digital p{
+#physical p,
+#digital p {
     font-size: 2.5rem;
     font-weight: 500;
     color: var(--color5);
 }
 
-#about-section{
+#about-section {
     position: relative;
     justify-content: space-around;
     align-items: center;
 }
 
-#aboutinfo, #qualification{
-    width : 400px;
+#aboutinfo,
+#qualification {
+    width: 400px;
     height: 400px;
     background: var(--card_color);
     box-shadow: var(--shadow);
@@ -704,7 +753,7 @@ th{
     border-radius: 10px;
 }
 
-#my_image{
+#my_image {
     margin: 0;
     padding: 0;
     border-radius: 50%;
@@ -713,30 +762,31 @@ th{
     height: 300px;
 }
 
-#aboutinfo span{
+#aboutinfo span {
     color: var(--color1);
 }
 
-#imgandname{
+#imgandname {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#imgandname p{
+#imgandname p {
     font-size: 2.5rem;
     font-weight: 500;
     color: var(--color5);
 }
 
-#aboutinfo p, #qualification p{
+#aboutinfo p,
+#qualification p {
     font-size: 1.5rem;
     color: var(--color4);
     text-align: center;
 }
 
-#qualification img{
+#qualification img {
     box-shadow: var(--shadow);
     border-radius: 10px;
     height: 80px;
@@ -745,18 +795,19 @@ th{
     transition: 0.2s ease-in-out;
 }
 
-#qualification img:hover{
+#qualification img:hover {
     transform: scale(1.1);
 }
 
-#qualification{
+#qualification {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-#row1, #row3{
+#row1,
+#row3 {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -764,7 +815,7 @@ th{
     justify-content: space-around;
 }
 
-.html{
+.html {
     margin: 0;
     padding: 0;
     height: 0;

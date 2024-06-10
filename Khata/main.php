@@ -22,7 +22,7 @@
     <div class="container" id="container">
         <?php while($row = mysqli_fetch_assoc($result))
         { ?>
-            <div class="box">
+            <div class="box" id="box<?= $row['Id'] ?>" ondblclick="showTransaction(event, this.id[3])">
                 <h3 class="name"><?php echo strtoupper($row['Name']) ?></h3>
                 <h2 id="amount">&#8377;<?php echo strtoupper($row['Amount']) ?></h2>
                 <button class="modify_button" id="<?php echo $row['Id'] ?>">Modify</button>
@@ -35,7 +35,7 @@
                     </div>
             </div>
         <?php } ?>
-        <div class="box" id="add" onclick="createPopup()">
+        <div class="box" id="add"  title="Add New Borrower" onclick="createPopup()">
             <p id="plus">+</p>
         </div> 
     </div>
@@ -50,66 +50,106 @@
         <button id="cancel_button">No</button>
         <div id="buttons"></div>
 
-        <div id="popup_background">
-            <div id="popup_container">
-            <img src="./images/close-button-svgrepo-com.svg" id="popup_close_button" onclick="popdown()">
-                <form id="popup_form" method="post">
-                    <h1 id="command_text"></h1>
-                    <input type="text" name="id" id="hidden_input" autocomplete="off">
-                    <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required>
-                </form>
+        <!-- Element to Append inside the popup for transaction -->
+        <div class="transaction">
+            <h2>Transactions</h2>
+            <div class="transactions_table">
+                <div class="transaction_box">
+                    <div class="memo">For Bhindi</div>
+                    <div class="transaction_amount1">&#8377;20</div>
+                    <div class="datetime">20-01-2024 12:32</div>
+                </div>
+                <div class="transaction_box">
+                    <div class="memo">For Ramtorai</div>
+                    <div class="transaction_amount2">&#8377;30</div>
+                    <div class="datetime">20-01-2024 12:32</div>
+                </div>
+                <div class="transaction_box">
+                    3
+                </div>
+                <div class="transaction_box">
+                    4
+                </div>
+                <div class="transaction_box">
+                    5
+                </div>
+            </div>
+        </div>
+
+        <!-- Form to Append inside the popup -->
+        <form class="popup_form" method="post">
+            <h1 class="command_text"></h1>
+            <input type="text" name="id" id="hidden_input" autocomplete="off">
+            <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required>
+        </form>
+
+        <div class="popup_background" onclick="popdown(event)">
+            <div class="popup_container">
+                <img src="./images/close-button-svgrepo-com.svg" class="popup_close_button" onclick="popdown(event)">
+                  <!-- Append Anything -->
             </div>
         </div>        
     </div>
 
     <script>
-        let pop = document.getElementById("popup_background");
+        let popup_background = document.getElementsByClassName("popup_background")[0];
         let createButton = document.getElementById("create_button");
         let increaseAmountButton = document.getElementById("increase_button");
         let decreaseAmountButton = document.getElementById("decrease_button");
         let inputName = document.getElementById("name_input");
         let inputAmount = document.getElementById("amount_input");
         let targetButton = document.getElementById("buttons");
-        let targetInput = document.getElementById("popup_form");
+        let popup_form = document.getElementsByClassName("popup_form")[0];
         let targetPopup = document.getElementById("body")
         let confirm_button = document.getElementById("confirm_button");
         let cancel_button = document.getElementById("cancel_button");
-        let popup_container =document.getElementById("popup_container");
-        let popup_close_button = document.getElementById("popup_close_button");
+        let popup_container =document.getElementsByClassName("popup_container")[0];
+        let popup_close_button = document.getElementsByClassName("popup_close_button")[0];
         let user_name = document.getElementById("user_name");
+        let transaction = document.getElementsByClassName("transaction")[0];
+
+        let command_text = document.getElementsByClassName("command_text")[0];
 
         user_name.innerText = '<?php echo mysqli_fetch_assoc($users->query("select * from usernames where username='$table'"))['name'] ?>';
 
         function createPopup()
         {
-            targetPopup.appendChild(pop);
+            popup_container.appendChild(popup_form);
+            targetPopup.appendChild(popup_background);
             targetButton.innerHTML = "";
-            targetInput.appendChild(targetButton);
-            if(!targetInput.querySelector("#name_input")) targetInput.insertBefore(inputName, targetInput.childNodes[2]);
-            if(!targetInput.querySelector("#amount_input")) targetInput.insertBefore(inputAmount, targetInput.childNodes[3]);
+            popup_form.appendChild(targetButton);
+            if(!popup_form.querySelector("#name_input")) popup_form.insertBefore(inputName, popup_form.childNodes[2]);
+            if(!popup_form.querySelector("#amount_input")) popup_form.insertBefore(inputAmount, popup_form.childNodes[3]);
             targetButton.appendChild(createButton);
-            document.getElementById("command_text").innerText = "New Borrower";
+            command_text.innerText = "New Borrower";
             inputName.focus();
         }
 
-        function popdown()
+        function popdown(event)
         {
-            targetPopup.removeChild(pop);
+            if(event.target === popup_close_button || event.target === popup_background)
+            {
+                targetPopup.removeChild(popup_background);
+                if(popup_container.contains(popup_form)) popup_container.removeChild(popup_form);
+                if(popup_container.contains(transaction)) popup_container.removeChild(transaction);
+            }
+            
         }
 
         let decreases = document.querySelectorAll('.modify_button');
         decreases.forEach(function(element)
         {
             element.onclick = function(){
-                targetPopup.appendChild(pop);
+                popup_container.appendChild(popup_form);
+                targetPopup.appendChild(popup_background);
                 targetButton.innerHTML = "";
                 document.getElementById("hidden_input").value = element.id;
-                if(targetInput.querySelector("#name_input")) targetInput.removeChild(inputName);
-                if(!targetInput.querySelector("#amount_input")) targetInput.appendChild(inputAmount);
-                targetInput.appendChild(targetButton);
+                if(popup_form.querySelector("#name_input")) popup_form.removeChild(inputName);
+                if(!popup_form.querySelector("#amount_input")) popup_form.appendChild(inputAmount);
+                popup_form.appendChild(targetButton);
                 targetButton.appendChild(decreaseAmountButton);
                 targetButton.appendChild(increaseAmountButton);
-                document.getElementById("command_text").innerText = "Modify Amount";
+                command_text.innerText = "Modify Amount";
                 inputAmount.focus();
             }
             
@@ -117,16 +157,26 @@
 
         function confirm(nth)
         {
-            targetPopup.appendChild(pop);
-            popup_container.style = "display : grid;";
+            popup_container.appendChild(popup_form);
+            targetPopup.appendChild(popup_background);
             targetButton.innerHTML = "";
-            if(targetInput.querySelector("#name_input")) targetInput.removeChild(inputName);
-            if(targetInput.querySelector("#amount_input")) targetInput.removeChild(inputAmount);
-            document.getElementById("command_text").innerText = "Has amount paid?";
-            targetInput.appendChild(targetButton);
+            if(popup_form.querySelector("#name_input")) popup_form.removeChild(inputName);
+            if(popup_form.querySelector("#amount_input")) popup_form.removeChild(inputAmount);
+            command_text.innerText = "Has amount paid?";
+            popup_form.appendChild(targetButton);
             targetButton.appendChild(confirm_button);
             targetButton.appendChild(cancel_button);
             document.getElementById("confirm_button").href="main.php?username=<?php echo $table ?> & delId=".concat(nth);
+        }
+
+        function showTransaction(event, id)
+        {
+            let parent = document.getElementById("box"+id);
+            if(event.target === parent)
+            {
+                targetPopup.appendChild(popup_background);
+                popup_container.appendChild(transaction);
+            }
         }
 
         if(window.history.replaceState)
@@ -137,21 +187,18 @@
         // Navbar
         var logout = document.getElementById("get_started_button")
         logout.innerText = "Log Out";
-        logout.onclick = function(){
-            window.location.href = "?logout=<?= $table ?>";
-        }
+        logout.onclick = function() {window.location.href = "?logout=<?= $table ?>";}
 
         document.getElementById("search").style = "display:inline;";
         document.getElementById("search_icon").style = "display:inline;";
         document.getElementById("user").style = "display:flex;";
+        document.getElementById("slider-menu").style = "display:none;"
         document.getElementById("search_icon_image").onclick =function(){
-            var username = document.getElementById("input_search").value;
-            window.location.href = "main.php?username=<?php echo $table ?>" +`&search=${username}`;
+            var search_value = document.getElementById("input_search").value;
+            window.location.href = "main.php?username=<?php echo $table ?>" +`&search=${search_value}`;
         }
-        function h(){console.log(done)};
-        document.getElementById("search").onsubmit = function(){
-            console.log("done");
-        }
+
+
     </script>
 </body>
 </html>
