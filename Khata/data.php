@@ -15,7 +15,7 @@
     $transactions = mysqli_connect($sql_host, $sql_username, $sql_password, 'transactions');
 
     $logged_in->query("CREATE TABLE IF NOT EXISTS username(username varchar(20))");    
-    $transactions->query("CREATE TABLE IF NOT EXISTS transaction(lender_username varchar(20), borrower_id int, amount int, type varchar(1), dataTime DATETIME)");
+    $transactions->query("CREATE TABLE IF NOT EXISTS transaction(lender_username varchar(20), borrower_id int, amount int, memo varchar(30), type varchar(1), dataTime DATETIME)");
 
     // if(!$con) die("Connection Error");
 ?>

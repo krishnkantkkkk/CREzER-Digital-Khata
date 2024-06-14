@@ -22,7 +22,7 @@
     <div class="container" id="container">
         <?php while($row = mysqli_fetch_assoc($result))
         { ?>
-            <div class="box" id="box<?= $row['Id'] ?>" ondblclick="showTransaction(event, this.id[3])">
+            <div class="box" id="box<?= $row['Id'] ?>" ondblclick="showTransaction(event, this.id.slice(3))">
                 <h3 class="name"><?php echo strtoupper($row['Name']) ?></h3>
                 <h2 id="amount">&#8377;<?php echo strtoupper($row['Amount']) ?></h2>
                 <button class="modify_button" id="<?php echo $row['Id'] ?>">Modify</button>
@@ -50,48 +50,51 @@
         <button id="cancel_button">No</button>
         <div id="buttons"></div>
 
-        <!-- Element to Append inside the popup for transaction -->
-        <div class="transaction">
-            <h2>Transactions</h2>
-            <div class="transactions_table">
-                <div class="transaction_box">
-                    <div class="memo">For Bhindi</div>
-                    <div class="transaction_amount1">&#8377;20</div>
-                    <div class="datetime">20-01-2024 12:32</div>
-                </div>
-                <div class="transaction_box">
-                    <div class="memo">For Ramtorai</div>
-                    <div class="transaction_amount2">&#8377;30</div>
-                    <div class="datetime">20-01-2024 12:32</div>
-                </div>
-                <div class="transaction_box">
-                    3
-                </div>
-                <div class="transaction_box">
-                    4
-                </div>
-                <div class="transaction_box">
-                    5
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Form to Append inside the popup -->
         <form class="popup_form" method="post">
             <h1 class="command_text"></h1>
             <input type="text" name="id" id="hidden_input" autocomplete="off">
             <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required>
+            <input type="text" name="memo" id="memo_input" placeholder="Enter Memo" autocomplete="off">
         </form>
-
+        
         <div class="popup_background" onclick="popdown(event)">
             <div class="popup_container">
                 <img src="./images/close-button-svgrepo-com.svg" class="popup_close_button" onclick="popdown(event)">
-                  <!-- Append Anything -->
+                <!-- Append Anything -->
             </div>
         </div>        
+        <!-- Element to Append inside the popup for transaction -->
+        <div class="transaction">
+            <h2>Transactions</h2>
+            <div class="transactions_table">
+                <?php 
+                if(isset($_GET['transaction_id'])){
+                $id = $_GET['transaction_id'];
+                $res = $transactions->query("select * from transaction where lender_username= '$table' and borrower_id = $id order by dataTime desc");  
+                while($rows = $res->fetch_assoc()){?>
+                <div class="transaction_box">
+                    <div class="memo_container">
+                        <div class="memo"><?=ucfirst($rows['memo'])?></div>
+                        <div class="datetime"><?=$rows['dataTime']?></div>
+                    </div>
+                    <div class="transaction_amount<?= $rows['type'] ?>"><?php if($rows['type']=='m') echo '-'; else echo '+';?>&#8377;<?= $rows['amount'] ?></div>
+                </div>
+                <?php }
+                if(!mysqli_num_rows($res)) echo "<h3 style='color:#ff9945;'>No Transactions</h3>";
+                echo "<script>
+                        document.getElementById('body').appendChild(document.getElementsByClassName('popup_background')[0]);
+                        document.getElementsByClassName('popup_container')[0].appendChild(document.getElementsByClassName('transaction')[0]);
+                    </script>";
+                }
+                ?>
+            </div>
+        </div>
     </div>
-
+    
     <script>
+        let targetPopup = document.getElementById("body");
         let popup_background = document.getElementsByClassName("popup_background")[0];
         let createButton = document.getElementById("create_button");
         let increaseAmountButton = document.getElementById("increase_button");
@@ -100,14 +103,13 @@
         let inputAmount = document.getElementById("amount_input");
         let targetButton = document.getElementById("buttons");
         let popup_form = document.getElementsByClassName("popup_form")[0];
-        let targetPopup = document.getElementById("body")
         let confirm_button = document.getElementById("confirm_button");
         let cancel_button = document.getElementById("cancel_button");
         let popup_container =document.getElementsByClassName("popup_container")[0];
         let popup_close_button = document.getElementsByClassName("popup_close_button")[0];
         let user_name = document.getElementById("user_name");
         let transaction = document.getElementsByClassName("transaction")[0];
-
+        let memo_input = document.getElementById("memo_input");
         let command_text = document.getElementsByClassName("command_text")[0];
 
         user_name.innerText = '<?php echo mysqli_fetch_assoc($users->query("select * from usernames where username='$table'"))['name'] ?>';
@@ -129,9 +131,11 @@
         {
             if(event.target === popup_close_button || event.target === popup_background)
             {
-                targetPopup.removeChild(popup_background);
+                if(targetPopup.contains(popup_background)) targetPopup.removeChild(popup_background);
                 if(popup_container.contains(popup_form)) popup_container.removeChild(popup_form);
                 if(popup_container.contains(transaction)) popup_container.removeChild(transaction);
+                memo_input.style = "display:inline;";
+                window.location.href="main.php";
             }
             
         }
@@ -162,6 +166,7 @@
             targetButton.innerHTML = "";
             if(popup_form.querySelector("#name_input")) popup_form.removeChild(inputName);
             if(popup_form.querySelector("#amount_input")) popup_form.removeChild(inputAmount);
+            memo_input.style = "display:none;";
             command_text.innerText = "Has amount paid?";
             popup_form.appendChild(targetButton);
             targetButton.appendChild(confirm_button);
@@ -174,8 +179,7 @@
             let parent = document.getElementById("box"+id);
             if(event.target === parent)
             {
-                targetPopup.appendChild(popup_background);
-                popup_container.appendChild(transaction);
+                window.location.href = `?transaction_id=${id}`;
             }
         }
 
@@ -207,12 +211,14 @@
     {
         $name = strtolower($_POST['name']);
         $amount = $_POST['amount'];
+        $memo = $_POST['memo'];
+        if(empty($memo)) $memo = 'Borrowed';
         $createQuery = "insert into $table values(null, '{$name}', {$amount})";
         if($name != "" && $amount != null)
         {
             mysqli_query($users_borrowers, $createQuery);
             $borrower_id = (int)mysqli_fetch_assoc($users_borrowers->query("SELECT max(id) from $table"))['max(id)'];
-            $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $borrower_id, $amount, '+', now())");
+            $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $borrower_id, $amount, '$memo', 'p', now())");
             header("Refresh:0");
             ob_end_flush(); 
         }
@@ -222,9 +228,11 @@
     {
         $id = $_POST['id'];
         $amount = $_POST['amount'];
+        $memo = $_POST['memo'];
+        if(empty($memo)) $memo = 'Paid';
         $removeQuery = "update $table set Amount= Amount-{$amount} where Id={$id};";
         $check_amount = mysqli_fetch_assoc($users_borrowers->query("select Amount from $table where id={$id}"))['Amount'];
-        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '-', now())");
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '$memo', 'm', now())");
         if($amount != null)
         {
             if((int)$check_amount - $amount >= 0)
@@ -239,9 +247,11 @@
     elseif(isset($_POST["add"]))
     {
         $id = $_POST['id'];
+        $memo = $_POST['memo'];
+        if(empty($memo)) $memo = 'Borrowed';
         $amount = $_POST['amount'];
         $addQuery = "update $table set Amount= Amount+{$amount} where Id={$id};";
-        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '+', now())");
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '$memo', 'p', now())");
         if($amount!=null)
         {
             mysqli_query($users_borrowers, $addQuery);

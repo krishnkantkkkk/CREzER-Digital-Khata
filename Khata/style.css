@@ -238,6 +238,7 @@ input:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 10px;
 }
 
 .transaction_box{
@@ -245,11 +246,14 @@ input:focus {
     background-color: var(--color2);
     border-radius: 5px;
     width: 90%;
-    margin: 4.84px 0;
+    margin:0 0 4.4px 0;
+    padding: 0 10px;
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    min-height: 46px;
 }
 
 .transaction_box div
@@ -258,8 +262,20 @@ input:focus {
     padding: 0;
 }
 
-.transaction_amount1{color:var(--color1);}
-.transaction_amount2{color:#ff9945;}
+.memo_container
+{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.datetime{
+    font-size: 10px;
+}
+
+.transaction_amountp{color:var(--color1);}
+.transaction_amountm{color:#ff9945;}
 
 ::-webkit-scrollbar {
     width: 5px;
