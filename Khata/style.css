@@ -5,6 +5,7 @@
     --color4: #fff;
     --color5: #37d7aa;
     --color6: #40454e;
+    --color7: #ff9945;
     --card_color: #272d37;
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -72,7 +73,6 @@ input:focus {
 .container {
     display: flex;
     margin-top: 50px;
-    width: 100%;
     flex-wrap: wrap;
 }
 
@@ -173,9 +173,12 @@ input:focus {
     width: 350px;
     height: 350px;
     background: var(--color3);
+    border: #40454e solid 2px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .popup_close_button {
@@ -221,8 +224,11 @@ input:focus {
 
 .transaction
 {
-    height: 90%;
+    height: 100%;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .transaction h2
@@ -233,12 +239,13 @@ input:focus {
 
 .transactions_table
 {
-    height: 80%;
+    height: 100%;
     overflow-y: overlay;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 10px;
+    padding: 0;
+    scrollbar-gutter: stable both-edges;
 }
 
 .transaction_box{
@@ -274,8 +281,24 @@ input:focus {
     font-size: 10px;
 }
 
-.transaction_amountp{color:var(--color1);}
-.transaction_amountm{color:#ff9945;}
+.transaction_amountm{
+    color:var(--color1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.transaction_amountp{
+    color:#ff9945;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transaction_img{
+    height: 15px;
+    margin: 0 0 0 5px;
+    padding: 0;
+}
 
 ::-webkit-scrollbar {
     width: 5px;
@@ -628,10 +651,11 @@ main {
 
 #data_content {
     width: 50%;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: end;
 }
 
 .card {

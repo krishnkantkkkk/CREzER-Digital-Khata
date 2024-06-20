@@ -42,8 +42,8 @@
     
     <!-- Template -->
     <div class="box" id="template">
-        <button name="remove" id="decrease_button" value="Deduct">Minus</button>
-        <button name="add" id="increase_button" value="Add">Plus</button>
+        <button name="remove" id="decrease_button" value="Deduct">Paid</button>
+        <button name="add" id="increase_button" value="Add">Borrowed</button>
         <button name="create" id="create_button" value="Create">Create</button>
         <input type="text" name="name" placeholder="Enter Name" id="name_input" autocomplete="off" required>
         <a id="confirm_button">Yes</a>
@@ -64,7 +64,8 @@
                 <img src="./images/close-button-svgrepo-com.svg" class="popup_close_button" onclick="popdown(event)">
                 <!-- Append Anything -->
             </div>
-        </div>        
+        </div>       
+
         <!-- Element to Append inside the popup for transaction -->
         <div class="transaction">
             <h2>Transactions</h2>
@@ -79,11 +80,12 @@
                         <div class="memo"><?=ucfirst($rows['memo'])?></div>
                         <div class="datetime"><?=$rows['dataTime']?></div>
                     </div>
-                    <div class="transaction_amount<?= $rows['type'] ?>"><?php if($rows['type']=='m') echo '-'; else echo '+';?>&#8377;<?= $rows['amount'] ?></div>
+                    <div class="transaction_amount<?= $rows['type'] ?>">&#8377;<?= $rows['amount'] ?><?php if($rows['type']=='m') echo '<img class="transaction_img" src ="./images/deposit.svg">'; else echo '<img class="transaction_img" src="./images/note_down.svg">';?> </div>
                 </div>
                 <?php }
                 if(!mysqli_num_rows($res)) echo "<h3 style='color:#ff9945;'>No Transactions</h3>";
                 echo "<script>
+                        document.getElementsByClassName('popup_container')[0].style='height:400px;';
                         document.getElementById('body').appendChild(document.getElementsByClassName('popup_background')[0]);
                         document.getElementsByClassName('popup_container')[0].appendChild(document.getElementsByClassName('transaction')[0]);
                     </script>";
@@ -133,9 +135,13 @@
             {
                 if(targetPopup.contains(popup_background)) targetPopup.removeChild(popup_background);
                 if(popup_container.contains(popup_form)) popup_container.removeChild(popup_form);
-                if(popup_container.contains(transaction)) popup_container.removeChild(transaction);
+                if(popup_container.contains(transaction)) 
+                {
+                    popup_container.removeChild(transaction);
+                    window.location.href = "main.php";
+                }
                 memo_input.style = "display:inline;";
-                window.location.href="main.php";
+                popup_container.style="height:350px;";
             }
             
         }
@@ -151,8 +157,8 @@
                 if(popup_form.querySelector("#name_input")) popup_form.removeChild(inputName);
                 if(!popup_form.querySelector("#amount_input")) popup_form.appendChild(inputAmount);
                 popup_form.appendChild(targetButton);
-                targetButton.appendChild(decreaseAmountButton);
                 targetButton.appendChild(increaseAmountButton);
+                targetButton.appendChild(decreaseAmountButton);
                 command_text.innerText = "Modify Amount";
                 inputAmount.focus();
             }
