@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url(fonts/Roboto_Slab/RobotoSlab.ttf);
+}
+@font-face {
+    font-family: 'Merienda';
+    src: url(fonts/Merienda/Merienda-VariableFont_wght.ttf);
+}
+
 :root {
     --color1: #45FFCA;
     --color2: #222831;
@@ -8,12 +17,14 @@
     --color7: #ff9945;
     --card_color: #272d37;
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    --fontFamily1 : 'Roboto Slab';
+    --fontFamily2 : 'Merienda';
 }
 
 * {
     margin: 8px;
     padding: 10px;
-    font-family: "Roboto Slab";
+    font-family: var(--fontFamily1);
     background: none;
 }
 
@@ -69,279 +80,7 @@ input:focus {
     caret-color: var(--color1);
 }
 
-
-.container {
-    display: flex;
-    margin-top: 50px;
-    flex-wrap: wrap;
-}
-
-.box {
-    background: var(--color3);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 204px;
-    height: 200px;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-}
-
-
-#delete_button {
-    height: 0px;
-    margin: 0;
-    padding: 0;
-}
-
-#delete_icon {
-    height: 20px;
-    width: 20px;
-    margin: 0;
-    padding: 0;
-    fill: gray;
-    transform: translate(96px, -195px);
-    cursor: pointer;
-}
-
-#delete_icon:hover {
-    fill: white;
-}
-
-#confirm_button {
-    display: block;
-    cursor: pointer;
-    border: none;
-    width: 80px;
-    margin: 10px;
-    background: var(--color1);
-    border-radius: 5px;
-    padding: 10px;
-    text-decoration: none;
-}
-
-#cancel_button,
-#decrease_button {
-    background: #ff9945;
-}
-
-#confirm_button:hover {
-    background: var(--color5);
-}
-
-#buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.name {
-    color: var(--color1);
-}
-
-#amount {
-    color: var(--color4);
-    transform: translateY(-10px);
-}
-
-#add {
-    cursor: pointer;
-}
-
-#plus {
-    color: gray;
-    font-size: 3rem;
-}
-
-.popup_background {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    backdrop-filter: blur(1px);
-}
-
-.popup_container {
-    width: 350px;
-    height: 350px;
-    background: var(--color3);
-    border: #40454e solid 2px;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.popup_close_button {
-    height: 25px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-}
-
-.popup_form {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-}
-
-.command_text {
-    color: var(--color4);
-}
-
-.popup_form input {
-    width: 250px;
-    border-radius: 5px;
-    border: none;
-    background: var(--color2);
-    color: var(--color4);
-}
-
-#name_input {
-    display: inline;
-}
-
-#hidden_input {
-    display: none;
-}
-
-.transaction
-{
-    height: 100%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.transaction h2
-{
-    text-align: center;
-    color: var(--color4);
-}
-
-.transactions_table
-{
-    height: 100%;
-    overflow-y: overlay;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    scrollbar-gutter: stable both-edges;
-}
-
-.transaction_box{
-    box-shadow: var(--shadow);
-    background-color: var(--color2);
-    border-radius: 5px;
-    width: 90%;
-    margin:0 0 4.4px 0;
-    padding: 0 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    min-height: 46px;
-}
-
-.transaction_box div
-{
-    margin: 0;
-    padding: 0;
-}
-
-.memo_container
-{
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-.datetime{
-    font-size: 10px;
-}
-
-.transaction_amountm{
-    color:var(--color1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.transaction_amountp{
-    color:#ff9945;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.transaction_img{
-    height: 15px;
-    margin: 0 0 0 5px;
-    padding: 0;
-}
-
-::-webkit-scrollbar {
-    width: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--color6);
-    border-radius: 10px;
-}
-
 /* Navbar */
-
-
-
-/* edited */
-#slider-menu {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#slide {
-    height: 5px;
-    margin: 0px;
-    padding: 0px 20px;
-    width: 100%;
-}
-
-#slider {
-
-    height: 2px;
-    border-radius: 3px;
-    margin: 0px 12.5px;
-    padding: 0;
-    width: 70px;
-    background-color: #37d7aa;
-    transition: all 0.3s ease-in-out;
-}
-
-/* end */
-
 nav {
     display: flex;
     align-items: center;
@@ -357,7 +96,7 @@ nav {
 }
 
 #logo {
-    font-family: "Merienda";
+    font-family: var(--fontFamily2);
     display: flex;
     align-items: center;
     font-weight: 900;
@@ -392,6 +131,32 @@ nav {
 
 #menus a:hover {
     color: var(--color1);
+}
+
+#slider-menu {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#slide {
+    height: 5px;
+    margin: 0px;
+    padding: 0px 20px;
+    width: 100%;
+}
+
+#slider {
+
+    height: 2px;
+    border-radius: 3px;
+    margin: 0px 12.5px;
+    padding: 0;
+    width: 70px;
+    background-color: #37d7aa;
+    transition: all 0.3s ease-in-out;
 }
 
 #user_status {
@@ -473,122 +238,6 @@ nav {
     background-color: var(--color5);
 }
 
-/* Register */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 86vh;
-}
-
-#lady_image {
-    width: 50%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
-#lady_image img {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-#register_section {
-    width: 50%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#error {
-    height: 0;
-    font-size: 1rem;
-    color: #ff9945;
-}
-
-.rlogin_box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background: var(--color3);
-    height: 400px;
-    max-height: 400px;
-    min-height: 350px;
-    width: 350px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-radius: 10px;
-    position: relative;
-}
-
-.rlogin_box h1 {
-    margin: 0;
-    color: white;
-    font-size: 2rem;
-}
-
-.rlogin_box input {
-    margin: 5px;
-    width: 250px;
-    color: var(--color4);
-    background: var(--color2);
-    border: none;
-    border-radius: 5px;
-}
-
-.rlogin_box p,
-.rlogin_box a {
-    font-size: 0.7rem;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    color: var(--color4);
-}
-
-.rlogin_box p {
-    width: 265px;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-}
-
-.rlogin_box a {
-    color: var(--color1);
-    cursor: pointer;
-}
-
-.rlogin_box button {
-    margin: 20px 0;
-    margin-top: 25px;
-}
-
-#social_media {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-}
-
-#social_media a {
-    height: 30px;
-    margin: 0 10px;
-}
-
-#social_media a img {
-    height: 30px;
-    margin: 0;
-    padding: 0;
-}
-
 /* Index.php */
 
 #mainBody section {
@@ -616,7 +265,7 @@ main {
 }
 
 #hook_text span {
-    font-family: "Merienda";
+    font-family: var(--fontFamily2);
     font-weight: 900;
     color: var(--color1);
 }
@@ -705,7 +354,7 @@ th {
 
 #analytics p span {
     color: var(--color1);
-    font-family: "Merienda";
+    font-family: var(--fontFamily2);
     font-weight: 900;
     margin: 0;
     padding: 0;
@@ -847,6 +496,7 @@ th {
 }
 
 #row1,
+#row2,
 #row3 {
     margin: 0;
     padding: 0;
@@ -861,3 +511,396 @@ th {
     height: 0;
     transform: translateY(-30px);
 }
+
+
+
+/* Register */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 86vh;
+}
+
+#lady_image {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#lady_image img {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#register_section {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#error {
+    height: 0;
+    font-size: 1rem;
+    color: #ff9945;
+}
+
+.rlogin_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--color3);
+    height: 400px;
+    max-height: 400px;
+    min-height: 350px;
+    width: 350px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.rlogin_box h1 {
+    margin: 0;
+    color: white;
+    font-size: 2rem;
+}
+
+.rlogin_box input {
+    margin: 5px;
+    width: 250px;
+    color: var(--color4);
+    background: var(--color2);
+    border: none;
+    border-radius: 5px;
+}
+
+.rlogin_box p,
+.rlogin_box a {
+    font-size: 0.7rem;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--color4);
+}
+
+.rlogin_box p {
+    width: 265px;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.rlogin_box a {
+    color: var(--color1);
+    cursor: pointer;
+}
+
+.rlogin_box button {
+    margin: 20px 0;
+    margin-top: 25px;
+}
+
+#social_media {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+#social_media a {
+    height: 30px;
+    margin: 0 10px;
+}
+
+#social_media a img {
+    height: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Main.php */
+
+.container {
+    display: flex;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.box {
+    background: var(--color3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 204px;
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: relative;
+}
+
+
+#delete_button {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 9px;
+    right: 8px;
+}
+
+#delete_icon {
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    padding: 0;
+    fill: gray;
+    cursor: pointer;
+}
+
+#delete_icon:hover {
+    fill: white;
+}
+
+#confirm_button {
+    display: block;
+    cursor: pointer;
+    border: none;
+    width: 80px;
+    margin: 10px;
+    background: var(--color1);
+    border-radius: 5px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#cancel_button,
+#decrease_button {
+    background: #ff9945;
+}
+
+#confirm_button:hover {
+    background: var(--color5);
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.name {
+    color: var(--color1);
+}
+
+#amount {
+    color: var(--color4);
+    transform: translateY(-10px);
+}
+
+#add {
+    cursor: pointer;
+}
+
+#plus {
+    color: gray;
+    font-size: 3rem;
+}
+
+.popup_background {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    backdrop-filter: blur(1px);
+}
+
+.popup_container {
+    width: 350px;
+    height: 350px;
+    background: var(--color3);
+    border: #40454e solid 2px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup_close_button {
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.popup_form {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.command_text {
+    color: var(--color4);
+}
+
+.popup_form input {
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+    background: var(--color2);
+    color: var(--color4);
+}
+
+#name_input {
+    display: inline;
+}
+
+#hidden_input {
+    display: none;
+}
+
+.transaction
+{
+    height: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.borrower_id
+{
+    color: gray;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    left: 0px;
+    top: -1px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.borrower_id span{
+    margin: 0;
+    padding: 5px;
+    border : 2px solid #40454e;
+    border-top: var(--card_color);
+    background-color: var(--card_color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    min-width: 100px;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.transaction h2
+{
+    text-align: center;
+    color: var(--color4);
+}
+
+.transactions_table
+{
+    height: 100%;
+    overflow-y: overlay;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    scrollbar-gutter: stable both-edges;
+}
+
+.transaction_box{
+    box-shadow: var(--shadow);
+    background-color: var(--color2);
+    border-radius: 5px;
+    width: 90%;
+    margin:0 0 4.4px 0;
+    padding: 0 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    min-height: 46px;
+}
+
+.transaction_box div
+{
+    margin: 0;
+    padding: 0;
+}
+
+.memo_container
+{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.datetime{
+    font-size: 10px;
+}
+
+.transaction_amountm{
+    color:var(--color1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.transaction_amountp{
+    color:#ff9945;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transaction_img{
+    height: 15px;
+    margin: 0 0 0 5px;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color6);
+    border-radius: 10px;
+}
+

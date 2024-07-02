@@ -1,5 +1,8 @@
 <?php
     require_once('data.php');
+    $table = "";
+    if(mysqli_num_rows($logged_in->query("select * from username")))
+        $table = mysqli_fetch_assoc($logged_in->query("select * from username"))['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,14 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <link rel="icon" type="image/x-icon" href="/images/logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -33,17 +28,12 @@
         <div id="user_status">
             
             <form id="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
-            <div id="search_icon"><img id="search_icon_image" src="./images/search-icon.svg" alt=""></div>
-            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"></p></div>
+            <div id="search_icon"><img id="search_icon_image" src="images/search-icon.svg" alt=""></div>
+            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php echo mysqli_fetch_assoc($users->query("select * from usernames where username='$table'"))['name'] ?></p></div>
             <button id="get_started_button">Get Started</button>
         </div>
     </nav>
 </body>
 
-<script>
-    document.getElementById("logo").onclick =function(){window.location.href="index.php";}
-    document.getElementById("search").style = "display:none;";
-    document.getElementById("search_icon").style = "display:none;";
-    document.getElementById("user").style = "display:none;";
-</script>
+<script src="scripts/navbar.js"></script>
 </html>

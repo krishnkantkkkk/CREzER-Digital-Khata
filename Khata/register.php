@@ -51,7 +51,7 @@
             <p id="already">New User? <a onclick="register()">Register</a></p>
             <button id="register_button" name="login">Login</button>
             <div id="social_media">
-                <a href="https://www.instagram.com/mr_kkk_908/" target="_blank"><img src="./images/instagram-icon.svg" alt=""></a>
+                <a href="https://www.instagram.com/Krishna_kkk_908/" target="_blank"><img src="./images/instagram-icon.svg" alt=""></a>
                 <a href="https://twitter.com/Krishnkantkkk" target="_blank"><img src="./images/twitter-icon.svg" alt=""></a>
                 <a href="https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRlQQNVSPhNbjfQqNwkjRtSjVrjxjmQXBcstrTzBBnWnVvsDGcMXFZQpwMpgFXSXcSLHTJg" target="_blank"><img src="./images/gmail-icon.svg" alt=""></a>
                 <a href="https://github.com/krishnkantkkkk" target="_blank"><img src="./images/github-icon.svg" alt=""></a>
@@ -59,34 +59,7 @@
             </div>
         </form>
     </div>
-    <script>
-        let register_section = document.getElementById("register_section");
-        let register_container = document.getElementById("register_container");
-        let login_container = document.getElementById("login_container");
-        let error = document.getElementById("error");
-        register_container.onclick =function(){error.innerText=""};
-        login_container.onclick =function(){error.innerText=""};
-        document.getElementById("register_username1").focus();
-
-        function login()
-        {
-            register_section.innerHTML = "";
-            register_section.appendChild(error);
-            register_section.appendChild(login_container);
-        }
-
-        function register()
-        {
-            register_section.innerHTML = "";
-            register_section.appendChild(error);
-            register_section.appendChild(register_container);
-        }
-
-        // Navbar
-        document.getElementById("slider-menu").style = "display:none;";
-        var get_started_button = document.getElementById("get_started_button");
-        get_started_button.style = "display:none";
-    </script>
+    <script src="scripts/register.js"></script>
 </body>
 </html>
 

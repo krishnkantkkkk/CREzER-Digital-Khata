@@ -16,6 +16,4 @@
 
     $logged_in->query("CREATE TABLE IF NOT EXISTS username(username varchar(20))");    
     $transactions->query("CREATE TABLE IF NOT EXISTS transaction(lender_username varchar(20), borrower_id int, amount int, memo varchar(30), type varchar(1), dataTime DATETIME)");
-
-    // if(!$con) die("Connection Error");
 ?>
