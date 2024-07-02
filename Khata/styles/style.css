@@ -1,0 +1,94 @@
+@font-face {
+  font-family: "Roboto Slab";
+  src: url(../fonts/Roboto_Slab/RobotoSlab.ttf);
+}
+@font-face {
+  font-family: "Merienda";
+  src: url(../fonts/Merienda/Merienda-VariableFont_wght.ttf);
+}
+
+:root {
+  --color1: #45ffca;
+  --color2: #222831;
+  --color3: #31363f;
+  --color4: #fff;
+  --color5: #37d7aa;
+  --color6: #40454e;
+  --color7: #ff9945;
+  --card_color: #272d37;
+  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  --fontFamily1: "Roboto Slab";
+  --fontFamily2: "Merienda";
+}
+
+* {
+  margin: 8px;
+  padding: 10px;
+  font-family: var(--fontFamily1);
+  background: none;
+}
+
+html {
+  background: var(--color2);
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#template {
+  display: none;
+}
+
+p {
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 13.33px;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  width: 100px;
+  background: var(--color1);
+  border-radius: 5px;
+}
+
+button:hover {
+  background: var(--color5);
+}
+
+input {
+  color: var(--color4);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input:focus {
+  outline: none;
+  caret-color: var(--color1);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color6);
+  border-radius: 10px;
+}

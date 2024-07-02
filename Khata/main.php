@@ -1,12 +1,10 @@
 <?php
 ob_start();
 require_once('data.php');
-$table = "";
+$user_id = "";
 if (mysqli_num_rows($logged_in->query("select * from username")))
-    $table = mysqli_fetch_assoc($logged_in->query("select * from username"))['username'];
+    $user_id = mysqli_fetch_assoc($logged_in->query("select * from username"))['user_id'];
 else header("Location:register.php");
-$query = "select * from $table";
-$result = mysqli_query($users_borrowers, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,20 +13,29 @@ $result = mysqli_query($users_borrowers, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khata</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body id="body">
     <?php include("navbar.php"); ?>
     <!-- Main Content -->
+    <div class="switch_button">
+        <button class="borrower_page_button">Borrowers</button>
+        <button class="lender_page_button" onclick="window.location.href='lenders.php'">Lenders</button>
+    </div>
     <div class="container" id="container">
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <div class="box" id="box<?= $row['Id'] ?>" ondblclick="showTransaction(event, this.id.slice(3))">
-                <h3 class="name"><?php echo strtoupper($row['Name']) ?></h3>
-                <h2 id="amount">&#8377;<?php echo strtoupper($row['Amount']) ?></h2>
-                <button class="modify_button" id="<?php echo $row['Id'] ?>">Modify</button>
+        <?php 
+        $result = $totals->query("SELECT * FROM totals WHERE lender_id = '$user_id'");
+        while ($row = mysqli_fetch_assoc($result)) { 
+            $name_in_card = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE user_id =" .$row['borrower_id']))['name'];
+            ?>
+            <div class="box" id="box<?= $row['borrower_id'] ?>" ondblclick="showTransaction(event, this.id.slice(3))">
+                <h3 class="name"><?php echo strtoupper($name_in_card) ?></h3>
+                <h2 id="amount">&#8377;<?php echo strtoupper($row['amount']) ?></h2>
+                <button class="modify_button" id="<?php echo $row['borrower_id'] ?>">Modify</button>
                 <div id="delete_button">
-                    <svg onclick="confirm(<?php echo $row['Id'] ?>)" version="1.1" id="delete_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 482.428 482.429" xml:space="preserve">
+                    <svg onclick="confirm(<?php echo $row['borrower_id'] ?>)" version="1.1" id="delete_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 482.428 482.429" xml:space="preserve">
                         <g id="SVGRepo_bgCarrier" stroke-width="0" />
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
                         <g id="SVGRepo_iconCarrier">
@@ -65,6 +72,7 @@ $result = mysqli_query($users_borrowers, $query);
         <form class="popup_form" method="post">
             <h1 class="command_text"></h1>
             <input type="text" name="id" id="hidden_input" autocomplete="off">
+            <input type="text" name="input_userid" id="input_userid" placeholder="Borrower Phone/UserId" autocomplete="off">
             <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required onkeydown="pay_or_borrow(event)">
             <input type="text" name="memo" id="memo_input" placeholder="Enter Memo" autocomplete="off" onkeydown="pay_or_borrow(event)">
         </form>
@@ -84,12 +92,12 @@ $result = mysqli_query($users_borrowers, $query);
                 <?php
                 if (isset($_GET['transaction_id'])) {
                     $id = $_GET['transaction_id'];
-                    $res = $transactions->query("select * from transaction where lender_username= '$table' and borrower_id = $id order by dataTime desc");
-                    $borrower_id = 'NO_USER';
+                    $res = $transactions->query("select * from transaction where lender_id='$user_id' and borrower_id = '$id' order by dataTime desc");
+                    $borrower_id = "";
                     if (mysqli_num_rows($res)) {
                         // To Edit Borrower Id
-                        $borrower_id = strtoupper(mysqli_fetch_assoc($users_borrowers->query("select * from $table where id = '$id'"))['Name'] . "_" . mysqli_fetch_assoc($users_borrowers->query("select * from $table where id = '$id'"))['Id']);
-                        while ($rows = $res->fetch_assoc()) { ?>
+                        $borrower_id = strtoupper(mysqli_fetch_assoc($users->query("select * from users where user_id = '$id'"))['name']) . "_" . $id;
+                        while ($rows = mysqli_fetch_assoc($res)) { ?>
                             <div class="transaction_box">
                                 <div class="memo_container">
                                     <div class="memo"><?= ucfirst($rows['memo']) ?></div>
@@ -98,14 +106,13 @@ $result = mysqli_query($users_borrowers, $query);
                                 <div class="transaction_amount<?= $rows['type'] ?>">&#8377;<?= $rows['amount'] ?><?php if ($rows['type'] == 'm') echo '<img class="transaction_img" src ="./images/deposit.svg">';
                                 else echo '<img class="transaction_img" src="./images/note_down.svg">'; ?> </div>
                             </div>
-                            <?php }
-                    } else echo "<h3 style='color:#ff9945;'>User Doesn't Exists</h3>";
+                <?php }
+                    } else echo "<h3 style='color:#ff9945;'>No Transactions</h3>";
                     echo "<script>
                     document.getElementsByClassName('popup_container')[0].style='height:400px;';
                     document.getElementById('body').appendChild(document.getElementsByClassName('popup_background')[0]);
                     document.getElementsByClassName('popup_container')[0].appendChild(document.getElementsByClassName('transaction')[0]);
-                    </script>";
-                    echo "<script> document.querySelector('.borrower_id').innerHTML = '<span>#$borrower_id</span>' </script>";
+                    document.querySelector('.borrower_id').innerHTML = '<span>#$borrower_id</span>' </script>";
                 }
                 ?>
             </div>
@@ -118,15 +125,28 @@ $result = mysqli_query($users_borrowers, $query);
 </html>
 <?php
 if (isset($_POST["create"])) {
+    $borrower_userid = ($_POST['input_userid']);
     $name = strtolower($_POST['name']);
     $amount = $_POST['amount'];
     $memo = $_POST['memo'];
+    $borrower_id = 0;
     if (empty($memo)) $memo = 'Borrowed';
-    $createQuery = "insert into $table values(null, '{$name}', {$amount})";
     if ($name != "" && $amount != null) {
-        mysqli_query($users_borrowers, $createQuery);
-        $borrower_id = (int)mysqli_fetch_assoc($users_borrowers->query("SELECT max(id) from $table"))['max(id)'];
-        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $borrower_id, $amount, '$memo', 'p', now())");
+        if(!mysqli_num_rows($users->query("SELECT * FROM users WHERE username = '$borrower_userid' OR phone = '$borrower_userid'")))
+        {
+            if(is_numeric($borrower_userid)) $users->query("INSERT INTO users VALUES(null, null, '$name', '$borrower_userid', null)");
+            else $users->query("INSERT INTO users VALUES(null, '$borrower_userid', '$name', null, null)");
+            $borrower_id = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE name = '$name' AND phone = '$borrower_userid' OR username = '$borrower_userid'"))['user_id'];
+            $totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
+        }
+        else 
+        {
+            $borrower_id = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE name = '$name' AND phone = '$borrower_userid' OR username = '$borrower_userid'"))['user_id'];
+            if(mysqli_num_rows($totals->query("SELECT * FROM totals WHERE borrower_id = $borrower_id and lender_id=$user_id")))
+                $totals->query("UPDATE totals SET amount = amount + $amount WHERE borrower_id=$borrower_id");
+            else $totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
+        }
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
         header("Refresh:0");
         ob_end_flush();
     }
@@ -135,15 +155,14 @@ if (isset($_POST["create"])) {
     $amount = $_POST['amount'];
     $memo = $_POST['memo'];
     if (empty($memo)) $memo = 'Paid';
-    $removeQuery = "update $table set Amount= Amount-{$amount} where Id={$id};";
-    $check_amount = mysqli_fetch_assoc($users_borrowers->query("select Amount from $table where id={$id}"))['Amount'];
+    $removeQuery = "update totals set Amount= Amount-{$amount} where borrower_id={$id} and lender_id=$user_id;";
+    $check_amount = mysqli_fetch_assoc($totals->query("select Amount from totals where borrower_id={$id}"))['Amount'];
     if ($amount != null) {
         if ((int)$check_amount - $amount >= 0) {
-            $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '$memo', 'm', now())");
-            if ((int)$check_amount - $amount == 0) $users_borrowers->query("delete from $table where Id = {$id}");
-            else mysqli_query($users_borrowers, $removeQuery);
+            $transactions->query("INSERT INTO TRANSACTION VALUES('$id', $user_id, $amount, '$memo', 'm', now())");
+            if ((int)$check_amount - $amount == 0) $users_borrowers->query("delete from totals where borrower_id = {$id}");
+            else mysqli_query($totals, $removeQuery);
             header("Refresh:0");
-            ob_end_flush();
         }
     }
 } elseif (isset($_POST["add"])) {
@@ -151,21 +170,20 @@ if (isset($_POST["create"])) {
     $memo = $_POST['memo'];
     if (empty($memo)) $memo = 'Borrowed';
     $amount = $_POST['amount'];
-    $addQuery = "update $table set Amount= Amount+{$amount} where Id={$id};";
+    $addQuery = "update totals set Amount= Amount+{$amount} where borrower_id={$id} and lender_id=$user_id;";
     if ($amount != null) {
-        $transactions->query("INSERT INTO TRANSACTION VALUES('$table', $id, $amount, '$memo', 'p', now())");
-        mysqli_query($users_borrowers, $addQuery);
+        $transactions->query("INSERT INTO TRANSACTION VALUES('$id', $user_id, $amount, '$memo', 'p', now())");
+        mysqli_query($totals, $addQuery);
         header("Refresh:0");
-        ob_end_flush();
     }
 }
 
 if (isset($_GET['delId'])) {
     $id = $_GET['delId'];
-    $users_borrowers->query("delete from $table where Id ={$id}");
-    $transactions->query("DELETE FROM TRANSACTION WHERE lender_username='$table' AND borrower_id = '$id'");
+    $amount = mysqli_fetch_assoc($totals->query("SELECT * FROM totals WHERE borrower_id = $id AND lender_id = $user_id"))['amount']; 
+    $transactions->query("INSERT INTO TRANSACTION VALUES('$id', $user_id, $amount, 'paid', 'm', now())");
+    $totals->query("delete from totals where borrower_id={$id} and lender_id = $user_id");
     header("Location:main.php");
-    ob_end_flush();
 }
 
 if (isset($_GET['logout'])) {

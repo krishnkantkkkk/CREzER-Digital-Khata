@@ -18,16 +18,16 @@ function slide(id) {
   var shiftLength = 0;
   var div = document.getElementById("slider");
   if (id == "home") {
-    window.location.href = "index.php#introScroller";
+    window.location.href = "#intro_scroller";
     shiftLength = 0;
   } else if (id == "usecase") {
-    window.location.href = "index.php#usecaseScroller";
+    window.location.href = "#usecase_scroller";
     shiftLength = 75;
   } else if (id == "about") {
-    window.location.href = "index.php#aboutScroller";
+    window.location.href = "#about_scroller";
     shiftLength = 150;
   } else {
-    window.location.href = "index.php#contactScroller";
+    window.location.href = "#contact_scroller";
     shiftLength = 225;
   }
   div.style.transform = `translateX(${shiftLength}px)`;

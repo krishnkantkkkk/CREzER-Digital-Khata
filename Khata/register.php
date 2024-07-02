@@ -9,7 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/register.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <?php include("navbar.php") ?>
@@ -23,7 +24,7 @@
                 <h1>REGISTER</h1>
                 <input id="register_username1" type="text" name="username" placeholder="Username" autocomplete="off" required>
                 <input type="text" name="name" placeholder="Name" autocomplete="off" required>
-                <input type="email" name="email" placeholder="Email" autocomplete="off" required>
+                <input type="tel" name="phone" placeholder="Phone" autocomplete="off" required>
                 <input type="password" name="password" placeholder="Password" autocomplete="off" required>
                 <input type="password" name="confirmPass" placeholder="Confirm Password" autocomplete="off" required>
                 <p id="already">Already Registered? <a onclick="login()">Login</a></p>
@@ -46,7 +47,7 @@
 
         <form id="login_container" class="rlogin_box" method="post">
             <h1>LOGIN</h1>
-            <input type="text" name="login_username" placeholder="Username" autocomplete="off" required>
+            <input type="text" name="login_username" placeholder="Username/Phone" autocomplete="off" required>
             <input type="password" name="login_password" placeholder="Password" autocomplete="off" required>
             <p id="already">New User? <a onclick="register()">Register</a></p>
             <button id="register_button" name="login">Login</button>
@@ -68,10 +69,11 @@
     {
         $username = $_POST['username'];
         $name = $_POST['name'];
-        $email = $_POST['email'];
+        $phone = $_POST['phone'];
         $password = $_POST['password'];
         $cpassword = $_POST['confirmPass'];
-        $check_username = $users->query("select * from usernames where username =  '$username'");
+        $check_username = $users->query("select * from users where username =  '$username'");
+        $check_phone = $users->query("select * from users where phone =  '$phone'");
 
             if(mysqli_num_rows($check_username)) 
             {
@@ -83,14 +85,24 @@
                     </script>";
                 echo "<script>document.getElementById('error').innerText='Username Already Exists.'</script>";
             }
+            else if(mysqli_num_rows($check_phone))
+            {
+                echo "  <script>
+                        if(window.history.replaceState)
+                            {
+                                window.history.replaceState(null, null, window.location.href);
+                            }
+                    </script>";
+                echo "<script>document.getElementById('error').innerText='Phone Already Registered.'</script>";
+            }
             else 
             {
                 if($password === $cpassword)
                 {
-                    $users->query("insert into usernames values(NULL, '$username', '$name', '$email', '$password')");
-                    $users_borrowers->query("CREATE TABLE $username (Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, Name VARCHAR(50), Amount INT);");
-                    $logged_in->query("insert into username values('$username')");
-                    header("Location:main.php?username=$username");
+                    $users->query("insert into users values(NULL, '$username', '$name', '$phone', '$password')");
+                    $user_id = mysqli_fetch_assoc($users->query("select * from users where username = '$username'"))['user_id'];
+                    $logged_in->query("insert into username values('$username', '$user_id')");
+                    header("Location:main.php");
                     ob_end_flush();
                 }
                 else 
@@ -108,16 +120,19 @@
 
     if(isset($_POST["login"]))
     {
-        $username = $_POST["login_username"];
+        $input = $_POST["login_username"];
         $password = $_POST["login_password"];
+        $username = mysqli_fetch_assoc($users->query("select * from users where username = '$input' or phone = '$input'"))["username"];
+        $user_id = mysqli_fetch_assoc($users->query("select * from users where username = '$input' or phone = '$input'"))["user_id"];
 
-        $check_username = $users->query("select * from usernames where username = '$username'");
-        if(mysqli_num_rows($check_username))
+        $check_username = $users->query("select * from users where username = '$input'");
+        $check_phone = $users->query("select * from users where phone = '$input'");
+        if(mysqli_num_rows($check_username)||mysqli_num_rows($check_phone))
         {
-            $check_password = mysqli_fetch_assoc($users->query("select * from usernames where username = '$username'"))["password"];
+            $check_password = mysqli_fetch_assoc($users->query("select * from users where username = '$input' or phone = '$input'"))["password"];
             if($password === $check_password)
             {
-                $logged_in->query("insert into username values('$username')");
+                $logged_in->query("insert into username values('$username', '$user_id')");
                 header("Location:main.php");
                 ob_end_flush();
             }

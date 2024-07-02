@@ -1,0 +1,155 @@
+nav {
+  display: flex;
+  align-items: center;
+  color: white;
+  height: 35px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  background: var(--color2);
+  z-index: 2;
+}
+
+#logo {
+  font-family: var(--fontFamily2);
+  display: flex;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.5rem;
+  margin: 0 10px;
+  padding: 0;
+  user-select: none;
+  cursor: pointer;
+}
+
+#logo img {
+  height: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+#menus {
+  padding: 6px 10px;
+  display: flex;
+  margin: 0px;
+}
+
+#menus a {
+  text-align: center;
+  width: 75px;
+  text-decoration: none;
+  color: var(--color4);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+#menus a:hover {
+  color: var(--color1);
+}
+
+#slider-menu {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#slide {
+  height: 5px;
+  margin: 0px;
+  padding: 0px 20px;
+  width: 100%;
+}
+
+#slider {
+  height: 2px;
+  border-radius: 3px;
+  margin: 0px 12.5px;
+  padding: 0;
+  width: 70px;
+  background-color: #37d7aa;
+  transition: all 0.3s ease-in-out;
+}
+
+#user_status {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 20px;
+}
+
+#search_icon {
+  margin: 0;
+  padding: 0;
+  height: 0;
+  width: 0;
+}
+
+#search {
+  margin: 0;
+  padding: 0;
+}
+
+#search_icon img {
+  height: 20px;
+  width: 20px;
+  margin: 0;
+  padding: 5px;
+  background: var(--color2);
+  border-radius: 50%;
+  transform: translate(-29px, -15px);
+  cursor: pointer;
+}
+
+#input_search {
+  width: 200px;
+  margin-right: 0;
+  border: none;
+  padding: 6px;
+  padding-left: 15px;
+  border-radius: 20px;
+  background: var(--color3);
+  color: var(--color4);
+}
+
+#user {
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+  padding: 0;
+}
+
+#user img {
+  height: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+#user_name {
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 10px;
+  margin-left: 2px;
+  padding: 0;
+}
+
+#get_started_button {
+  margin: 0;
+  color: black;
+  padding: 8px;
+  background-color: var(--color1);
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+#get_started_button:hover {
+  background-color: var(--color5);
+}

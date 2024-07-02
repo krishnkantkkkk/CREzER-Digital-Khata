@@ -1,8 +1,7 @@
 let targetPopup = document.getElementById("body");
 let popup_background = document.getElementsByClassName("popup_background")[0];
 let createButton = document.getElementById("create_button");
-let increaseAmountButton = document.getElementById("increase_button");
-let decreaseAmountButton = document.getElementById("decrease_button");
+let payButton = document.getElementById("payButton");
 let inputName = document.getElementById("name_input");
 let inputAmount = document.getElementById("amount_input");
 let targetButton = document.getElementById("buttons");
@@ -46,7 +45,7 @@ function popdown(event) {
       popup_container.removeChild(popup_form);
     if (popup_container.contains(transaction)) {
       popup_container.removeChild(transaction);
-      window.location.href = "main.php";
+      window.location.href = "lenders.php";
     }
     memo_input.style = "display:inline;";
     popup_container.style = "height:350px;";
@@ -55,21 +54,18 @@ function popdown(event) {
   }
 }
 
-let decreases = document.querySelectorAll(".modify_button");
+let decreases = document.querySelectorAll(".pay_button");
 decreases.forEach(function (element) {
   element.onclick = function () {
     popup_container.appendChild(popup_form);
     targetPopup.appendChild(popup_background);
     targetButton.innerHTML = "";
     document.getElementById("hidden_input").value = element.id;
-    if (popup_form.querySelector("#name_input"))
-      popup_form.removeChild(inputName);
     if (!popup_form.querySelector("#amount_input"))
       popup_form.insertBefore(inputAmount, memo_input);
     popup_form.appendChild(targetButton);
-    targetButton.appendChild(increaseAmountButton);
-    targetButton.appendChild(decreaseAmountButton);
-    command_text.innerText = "Modify Amount";
+    targetButton.appendChild(payButton);
+    command_text.innerText = "Pay Amount";
     inputAmount.focus();
   };
 });

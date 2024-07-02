@@ -1,0 +1,112 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 86vh;
+}
+
+#lady_image {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#lady_image img {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#register_section {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#error {
+  height: 0;
+  font-size: 1rem;
+  color: #ff9945;
+}
+
+.rlogin_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--color3);
+  height: 400px;
+  max-height: 400px;
+  min-height: 350px;
+  width: 350px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.rlogin_box h1 {
+  margin: 0;
+  color: white;
+  font-size: 2rem;
+}
+
+.rlogin_box input {
+  margin: 5px;
+  width: 250px;
+  color: var(--color4);
+  background: var(--color2);
+  border: none;
+  border-radius: 5px;
+}
+
+.rlogin_box p,
+.rlogin_box a {
+  font-size: 0.7rem;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--color4);
+}
+
+.rlogin_box p {
+  width: 265px;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.rlogin_box a {
+  color: var(--color1);
+  cursor: pointer;
+}
+
+.rlogin_box button {
+  margin: 20px 0;
+  margin-top: 25px;
+}
+
+#social_media {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+#social_media a {
+  height: 30px;
+  margin: 0 10px;
+}
+
+#social_media a img {
+  height: 30px;
+  margin: 0;
+  padding: 0;
+}

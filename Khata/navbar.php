@@ -11,7 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <link rel="icon" type="image/x-icon" href="/images/logo.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <nav>
@@ -29,7 +30,7 @@
             
             <form id="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
             <div id="search_icon"><img id="search_icon_image" src="images/search-icon.svg" alt=""></div>
-            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php echo mysqli_fetch_assoc($users->query("select * from usernames where username='$table'"))['name'] ?></p></div>
+            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php echo ucfirst(mysqli_fetch_assoc($users->query("select * from users where username='$table'"))['name']) ?></p></div>
             <button id="get_started_button">Get Started</button>
         </div>
     </nav>

@@ -1,0 +1,288 @@
+.switch_button {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.switch_button button {
+  margin: 0;
+  border-radius: 0;
+  border: solid 1px var(--color3);
+}
+
+.borrower_page_button {
+  color: gray;
+  background-color: var(--color2);
+}
+
+.lender_page_button {
+  background-color: var(--color3);
+  color: var(--color1);
+  cursor:context-menu;
+}
+
+.borrower_page_button:hover {
+  background-color: var(--color2);
+}
+
+.lender_page_button:hover {
+  background-color: var(--color3);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 40px 40px 40px;
+  margin: 0 8px;
+}
+
+.box {
+  background: var(--color3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 204px;
+  height: 200px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  position: relative;
+}
+
+#delete_button {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 9px;
+  right: 8px;
+}
+
+#delete_icon {
+  height: 20px;
+  width: 20px;
+  margin: 0;
+  padding: 0;
+  fill: gray;
+  cursor: pointer;
+}
+
+#delete_icon:hover {
+  fill: white;
+}
+
+#confirm_button {
+  display: block;
+  cursor: pointer;
+  border: none;
+  width: 80px;
+  margin: 10px;
+  background: var(--color1);
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+#cancel_button,
+#decrease_button {
+  background: #ff9945;
+}
+
+#confirm_button:hover {
+  background: var(--color5);
+}
+
+#buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.name {
+  color: var(--color1);
+}
+
+#amount {
+  color: var(--color4);
+  transform: translateY(-10px);
+}
+
+#add {
+  cursor: pointer;
+}
+
+#plus {
+  color: gray;
+  font-size: 3rem;
+}
+
+.popup_background {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  backdrop-filter: blur(1px);
+}
+
+.popup_container {
+  width: 350px;
+  height: 350px;
+  background: var(--color3);
+  border: #40454e solid 2px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup_close_button {
+  height: 25px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.popup_form {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.command_text {
+  color: var(--color4);
+}
+
+.popup_form input {
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+  background: var(--color2);
+  color: var(--color4);
+}
+
+#name_input {
+  display: inline;
+}
+
+#hidden_input {
+  display: none;
+}
+
+.transaction {
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.borrower_id {
+  color: gray;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  left: 0px;
+  top: -1px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.borrower_id span {
+  margin: 0;
+  padding: 5px;
+  border: 2px solid #40454e;
+  border-top: var(--card_color);
+  background-color: var(--card_color);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: center;
+  min-width: 100px;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.transaction h2 {
+  text-align: center;
+  color: var(--color4);
+}
+
+.transactions_table {
+  height: 100%;
+  overflow-y: overlay;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  scrollbar-gutter: stable both-edges;
+}
+
+.transaction_box {
+  box-shadow: var(--shadow);
+  background-color: var(--color2);
+  border-radius: 5px;
+  width: 90%;
+  margin: 0 0 4.4px 0;
+  padding: 0 10px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  min-height: 46px;
+}
+
+.transaction_box div {
+  margin: 0;
+  padding: 0;
+}
+
+.memo_container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.datetime {
+  font-size: 10px;
+}
+
+.transaction_amountm {
+  color: var(--color1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.transaction_amountp {
+  color: #ff9945;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transaction_img {
+  height: 15px;
+  margin: 0 0 0 5px;
+  padding: 0;
+}
