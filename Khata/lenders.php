@@ -26,6 +26,7 @@ else header("Location:register.php");
         <div class="container" id="container">
             <?php 
             $result = $totals->query("SELECT * FROM totals WHERE borrower_id = '$user_id'");
+            if(mysqli_num_rows($result)){
             while ($row = mysqli_fetch_assoc($result)) {
             $name_in_card = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE user_id =" .$row['lender_id']))['name'];
             ?>
@@ -34,7 +35,9 @@ else header("Location:register.php");
                 <h2 id="amount">&#8377;<?php echo strtoupper($row['amount']) ?></h2>
                 <button class="pay_button" id="<?php echo $row['lender_id'] ?>">Pay</button>
             </div>
-        <?php } ?>
+        <?php }}
+        else echo "<p style='color:var(--color6); font-size:1rem; width:100%; text-align:center;'>NOT ANY LENDER</p>";
+         ?>
     </div>
 
     <!-- Template -->

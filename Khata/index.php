@@ -1,7 +1,6 @@
 <?php
 require_once("data.php");
 $no_of_users = mysqli_num_rows($users->query("select * from users"));
-$usernames = $users->query("select * from users");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,12 +36,13 @@ $usernames = $users->query("select * from users");
                             <th>Name</th>
                             <?php
                             $i = 0;
+                            $usernames = $users->query("select * from users order by user_id desc");
                             while ($row = mysqli_fetch_array($usernames)) {
-                                if ($no_of_users - $i <= 3) {
+                                if ($i < 3) {
                             ?>
                                     <tr>
-                                        <td><?php echo ucfirst($row['username']) ?></td>
-                                        <td><?php echo ucfirst($row['name']) ?></td>
+                                        <td><?php echo ucwords($row['username']) ?></td>
+                                        <td><?php echo ucwords($row['name']) ?></td>
                                     </tr>
                             <?php }
                                 $i++;

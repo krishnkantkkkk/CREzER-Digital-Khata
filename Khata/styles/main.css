@@ -152,6 +152,23 @@
     flex-direction: column;
 }
 
+.error_message
+{
+    text-align: center;
+    color: var(--color4);
+    position: absolute;
+    top: -80px;
+    background-color: var(--color7);
+    border-radius: 5px;
+}
+
+.error_message span
+{
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
 .popup_close_button {
     height: 25px;
     position: absolute;
