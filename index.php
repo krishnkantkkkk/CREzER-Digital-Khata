@@ -1,7 +1,6 @@
 <?php
-session_start();
-$_SESSION['logged_in'] = "";
 require_once("data.php");
+session_start();
 $no_of_users = mysqli_num_rows($users->query("select * from users"));
 ?>
 <!DOCTYPE html>

@@ -1,7 +1,7 @@
 <?php
     require_once('data.php');
-    $user_id = "";
     if($_SESSION['logged_in']) $user_id = $_SESSION['logged_in'];
+    else $user_id = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
