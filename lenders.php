@@ -1,9 +1,9 @@
 <?php
+ob_start();
+session_start();
 require_once('data.php');
-$user_id = "";
-if (mysqli_num_rows($logged_in->query("select * from username")))
-    $user_id = mysqli_fetch_assoc($logged_in->query("select * from username"))['user_id'];
-else header("Location:register.php");
+$user_id = $_SESSION['logged_in'];
+if(!$user_id) header("Location:register.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,4 +157,5 @@ if (isset($_GET['logout'])) {
     $logged_in->query("DELETE FROM USERNAME WHERE USERNAME = '$table'");
     header("Location:index.php");
 }
+ob_end_flush();
 ?>
