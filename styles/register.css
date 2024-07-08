@@ -110,3 +110,15 @@ main {
   margin: 0;
   padding: 0;
 }
+
+@media screen and (max-width: 850px) {
+  #lady_image
+  {
+    display: none;
+  }
+
+  #register_section
+  {
+    width: 100%;
+  }
+}

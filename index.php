@@ -20,7 +20,7 @@ $no_of_users = mysqli_num_rows($users->query("select * from users"));
         <section id="intro">
             <div id="hook_content">
                 <div>
-                    <p id="hook_text">Welcome to<span>CREzER</span><br>Your Gateway to<br>Keep Credit<br>Records</p>
+                    <p id="hook_text">Welcome to<span> CREzER</span><br>Your Gateway to<br>Keep Credit<br>Records</p>
                     <div id="usercount">
                         <p id="count"></p>
                         USERS
@@ -64,14 +64,14 @@ $no_of_users = mysqli_num_rows($users->query("select * from users"));
             <div id="usecase_text" class="heading">
                 <p>USE CASE</p>
             </div>
-            <div id="physical">
+            <div id="physical" class="usecase-box">
                 <img src="images/record.svg">
                 <p>Physical Entry</p>
             </div>
             <div id="to">
                 <img src="images/to.svg" alt="">
             </div>
-            <div id="digital">
+            <div id="digital" class="usecase-box">
                 <img src="images/Digital_write.svg" alt="">
                 <p>Digital Entry</p>
             </div>
@@ -125,7 +125,7 @@ $no_of_users = mysqli_num_rows($users->query("select * from users"));
 </html>
 
 <?php
-if ($_SESSION['logged_in']) {
+if (isset($_SESSION['logged_in'])) {
     echo '<script>
             document.getElementById("get_started_button").innerText = "Dashboard";
             let sign_up = document.getElementById("sign_up");

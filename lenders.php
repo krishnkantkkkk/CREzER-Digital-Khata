@@ -53,9 +53,8 @@ if(!$user_id) header("Location:register.php");
         <form class="popup_form" method="post">
             <h1 class="command_text"></h1>
             <input type="text" name="id" id="hidden_input" autocomplete="off">
-            <input type="text" name="input_userid" id="input_userid" placeholder="Borrower Phone/UserId" required autocomplete="off">
-            <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required onkeydown="pay_or_borrow(event)">
-            <input type="text" name="memo" id="memo_input" placeholder="Enter Memo" autocomplete="off" onkeydown="pay_or_borrow(event)">
+            <input type="number" step="0.01" name="amount" placeholder="Enter Amount" id="amount_input" autocomplete="off" required>
+            <input type="text" name="memo" id="memo_input" placeholder="Enter Memo" autocomplete="off">
         </form>
 
         <div class="popup_background" onclick="popdown(event)">

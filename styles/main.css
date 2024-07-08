@@ -317,3 +317,10 @@
     margin: 0 0 0 5px;
     padding: 0;
 }
+
+@media screen and (max-width: 670px) {
+    .container
+    {
+      justify-content: center;
+    }
+  }

@@ -15,8 +15,6 @@ let user_name = document.getElementById("user_name");
 let transaction = document.getElementsByClassName("transaction")[0];
 let memo_input = document.getElementById("memo_input");
 let command_text = document.getElementsByClassName("command_text")[0];
-let input_userid = document.querySelector("#input_userid");
-input_userid.style = "display : none";
 
 function createPopup() {
   command_text.innerText = "New Borrower";
@@ -69,13 +67,6 @@ decreases.forEach(function (element) {
     inputAmount.focus();
   };
 });
-
-function pay_or_borrow(event) {
-  if (popup_form.contains(increaseAmountButton)) {
-    if (event.key === "+") increaseAmountButton.click();
-    else if (event.key === "-") decreaseAmountButton.click();
-  }
-}
 
 function confirm(nth) {
   popup_container.appendChild(popup_form);

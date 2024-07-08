@@ -30,26 +30,6 @@ nav {
   padding: 0;
 }
 
-#menus {
-  padding: 6px 10px;
-  display: flex;
-  margin: 0px;
-}
-
-#menus a {
-  text-align: center;
-  width: 75px;
-  text-decoration: none;
-  color: var(--color4);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0;
-}
-
-#menus a:hover {
-  color: var(--color1);
-}
-
 #slider-menu {
   margin-top: 10px;
   display: flex;
@@ -74,6 +54,28 @@ nav {
   background-color: #37d7aa;
   transition: all 0.3s ease-in-out;
 }
+
+#menus {
+  padding: 6px 10px;
+  display: flex;
+  margin: 0px;
+}
+
+#menus a {
+  text-align: center;
+  width: 75px;
+  text-decoration: none;
+  color: var(--color4);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+#menus a:hover {
+  color: var(--color1);
+}
+
+
 
 #user_status {
   width: 100%;
@@ -152,4 +154,10 @@ nav {
 
 #get_started_button:hover {
   background-color: var(--color5);
+}
+
+@media screen and (max-width: 670px) {
+  #slider-menu{
+    display: none;
+  }
 }

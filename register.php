@@ -3,7 +3,7 @@
     session_unset();
     session_start();
     require_once("data.php");
-    if($_SESSION['logged_in']) header("Location:main.php");
+    if(isset($_SESSION['logged_in'])) header("Location:main.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

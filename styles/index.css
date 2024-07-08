@@ -37,6 +37,8 @@
   font-family: var(--fontFamily2);
   font-weight: 900;
   color: var(--color1);
+  margin: 0;
+  padding: 0;
 }
 
 #usercount {
@@ -164,8 +166,19 @@ th {
   font-size: 3rem;
 }
 
-#useCase img {
-  height: 500px;
+.usecase-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.usecase-box img
+{
+  max-width: 600px;
+  width: 100%;
+  display: block;
 }
 
 #to {
@@ -177,14 +190,6 @@ th {
   width: 200px;
 }
 
-#digital,
-#physical {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 #physical p,
 #digital p {
@@ -281,3 +286,231 @@ th {
   transform: translateY(-30px);
 }
 
+@media screen and (max-width : 440px){
+  #mainBody .section_container #intro
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #hook_content
+  {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  #hook_content * p{
+    font-size: 2.5rem;
+  }
+
+  #usercount{
+    font-size: 2rem;
+  }
+
+  #data_content{
+    flex-grow: 1;
+    display: grid;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .card{
+    display: none;
+  }
+
+  #recent_users
+  {
+    display: none;
+  }
+
+  #about_scroller #about-section
+  {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: end;
+    align-items: center;
+  }
+
+  #about_text
+  {
+    transform: translateY(-20px);
+  }
+
+  #my_image
+  {
+    height: 200px;
+    border : 5px solid var(--color1);
+  }
+
+  #imgandname p
+  {
+    font-size: 2rem;
+  }
+
+  #aboutinfo
+  {
+    height: 200px;
+    min-width: 300px;
+    width: auto;
+  }
+
+  #aboutinfo p
+  {
+    font-size: 1rem;
+  }
+  
+  #qualification
+  {
+    display: none;
+  }
+}
+
+@media screen and (min-width:420px) and (max-width: 600px) {
+  #mainBody .section_container #intro
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #hook_content
+  {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  #hook_content * p{
+    font-size: 2.5rem;
+  }
+
+  #usercount{
+    font-size: 2rem;
+  }
+
+  #data_content{
+    flex-grow: 1;
+    display: grid;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .card{
+    width: auto;
+  }
+
+  #recent_users
+  {
+    display: none;
+  }
+
+  #about_scroller #about-section
+  {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: end;
+    align-items: center;
+  }
+
+  #my_image
+  {
+    height: 200px;
+    border : 5px solid var(--color1);
+  }
+
+  #imgandname p
+  {
+    font-size: 2rem;
+  }
+
+  #aboutinfo
+  {
+    height: 300px;
+    min-width: 300px;
+    width: auto;
+  }
+  
+  #qualification
+  {
+    display: none;
+  }
+
+}
+
+@media screen and (min-width:600px) and (max-width:990px) {
+  #mainBody .section_container #intro
+  {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #hook_content
+  {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  #hook_content div:nth-child(1)
+  {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #hook_content * p{
+    font-size: 2.5rem;
+  }
+
+  #usercount{
+    font-size: 2rem;
+  }
+
+  #data_content{
+    flex-grow: 1;
+    display: grid;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
+
+  .card{
+    width : auto;
+    overflow: hidden;
+  }
+
+  #recent_users p{
+    font-size: 2.3rem;
+  }
+
+  th,
+  td {
+    min-width: 0;
+    width : 300px;
+    text-align: center;
+  }
+
+  #analytics
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #analytics img{
+    width: 100%;
+  }
+
+
+}

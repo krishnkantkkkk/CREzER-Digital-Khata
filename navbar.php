@@ -1,6 +1,6 @@
 <?php
     require_once('data.php');
-    if($_SESSION['logged_in']) $user_id = $_SESSION['logged_in'];
+    if(isset($_SESSION['logged_in'])) $user_id = $_SESSION['logged_in'];
     else $user_id = "";
 ?>
 <!DOCTYPE html>
@@ -25,8 +25,8 @@
             </div>
             <div id="slide"><div id="slider"></div></div>
         </div>
+        
         <div id="user_status">
-            
             <form id="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
             <div id="search_icon"><img id="search_icon_image" src="images/search-icon.svg" alt=""></div>
             <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php echo ucfirst(mysqli_fetch_assoc($users->query("select * from users where user_id='$user_id'"))['name']) ?></p></div>
