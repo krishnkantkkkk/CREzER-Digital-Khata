@@ -42,8 +42,18 @@ $no_of_users = mysqli_num_rows($users->query("select * from users"));
                                 if ($i < 3) {
                             ?>
                                     <tr>
-                                        <td><?php echo ucwords($row['username']) ?></td>
-                                        <td><?php echo ucwords($row['name']) ?></td>
+                                        <td>
+                                            <?php 
+                                                if(strlen($row['username'])<=10) echo ucwords($row['username']);
+                                                else echo ucwords(substr($row['username'], 0, 10))."...";
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                                if(strlen($row['name'])<=10) echo ucwords($row['name']);
+                                                else echo ucwords(substr($row['name'], 0, 10))."...";
+                                            ?>
+                                        </td>
                                     </tr>
                             <?php }
                                 $i++;

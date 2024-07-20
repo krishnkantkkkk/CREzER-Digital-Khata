@@ -75,8 +75,6 @@ nav {
   color: var(--color1);
 }
 
-
-
 #user_status {
   width: 100%;
   display: flex;
@@ -156,8 +154,14 @@ nav {
   background-color: var(--color5);
 }
 
+@media screen and (max-width: 600px) {
+  .search {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 670px) {
-  #slider-menu{
+  #slider-menu {
     display: none;
   }
 }

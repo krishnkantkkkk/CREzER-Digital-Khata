@@ -23,6 +23,9 @@ if(!$user_id) header("Location:register.php");
         <button class="borrower_page_button">Borrowers</button>
         <button class="lender_page_button" onclick="window.location.href='lenders.php'">Lenders</button>
     </div>
+    <div class="create_sticky_button" onclick="createPopup()">
+        +
+    </div>
     <div class="container" id="container">
         <?php
         $result = $totals->query("SELECT * FROM totals WHERE lender_id = '$user_id'");

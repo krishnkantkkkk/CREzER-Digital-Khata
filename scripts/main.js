@@ -114,9 +114,6 @@ logout.innerText = "Log Out";
 logout.onclick = function () {
   window.location.href = "?logout=yes";
 };
-
-document.getElementById("search").style = "display:inline;";
-document.getElementById("search_icon").style = "display:inline;";
 document.getElementById("user").style = "display:flex;";
 document.getElementById("slider-menu").style = "display:none;";
 document.getElementById("search_icon_image").onclick = function () {

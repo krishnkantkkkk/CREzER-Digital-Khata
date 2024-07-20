@@ -27,9 +27,9 @@
         </div>
         
         <div id="user_status">
-            <form id="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
-            <div id="search_icon"><img id="search_icon_image" src="images/search-icon.svg" alt=""></div>
-            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php echo ucfirst(mysqli_fetch_assoc($users->query("select * from users where user_id='$user_id'"))['name']) ?></p></div>
+            <form id="search" class="search"><input type="text" id="input_search" name ="search" placeholder="Search Borrowers" autocomplete="off"></form>
+            <div id="search_icon" class="search"><img id="search_icon_image" src="images/search-icon.svg" alt=""></div>
+            <div id="user"><img src="./images/user-icon.svg" alt=""><p id="user_name"><?php $name = mysqli_fetch_assoc($users->query("select * from users where user_id='$user_id'"))['name']; echo strlen($name)<10 ? ucwords($name) : ucwords(substr($name, 0, 10))."..."; ?></p></div>
             <button id="get_started_button">Get Started</button>
         </div>
     </nav>
