@@ -24,7 +24,7 @@
             <p id="error"></p>
             <form id="register_container" class="rlogin_box" method="post">
                 <h1>REGISTER</h1>
-                <input id="register_username1" type="text" name="username" placeholder="Username" autocomplete="off" required>
+                <input id="register_username" type="text" name="username" placeholder="Username" autocomplete="off" required>
                 <input type="text" name="name" placeholder="Name" autocomplete="off" required>
                 <input type="tel" name="phone" placeholder="Phone" autocomplete="off" required>
                 <input type="password" name="password" placeholder="Password" autocomplete="off" required>
@@ -49,7 +49,7 @@
 
         <form id="login_container" class="rlogin_box" method="post">
             <h1>LOGIN</h1>
-            <input type="text" name="login_username" placeholder="Username/Phone" autocomplete="off" required>
+            <input type="text" id="login_username" name="login_username" placeholder="Username/Phone" autocomplete="off" required>
             <input type="password" name="login_password" placeholder="Password" autocomplete="off" required>
             <p id="already">New User? <a onclick="register()">Register</a></p>
             <button id="register_button" name="login">Login</button>

@@ -46,6 +46,7 @@ $no_of_users = mysqli_num_rows($users->query("select * from users"));
                                             <?php 
                                                 if(strlen($row['username'])<=10) echo ucwords($row['username']);
                                                 else echo ucwords(substr($row['username'], 0, 10))."...";
+                                                if(!$row['username']) echo "Not_Available";
                                             ?>
                                         </td>
                                         <td>

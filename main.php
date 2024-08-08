@@ -3,7 +3,7 @@ ob_start();
 session_start();
 require_once('data.php');
 $user_id = $_SESSION['logged_in'];
-if(!$user_id) header("Location:register.php");
+if (!$user_id) header("Location:register.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +29,11 @@ if(!$user_id) header("Location:register.php");
     <div class="container" id="container">
         <?php
         $result = $totals->query("SELECT * FROM totals WHERE lender_id = '$user_id'");
+        if(isset($_GET['search']))
+        {
+            $search = $_GET['search'];
+            $result = $totals->query("SELECT users.users.name, totals.totals.borrower_id, totals.totals.amount FROM users.users JOIN totals.totals ON (totals.totals.borrower_id = users.users.user_id AND totals.totals.lender_id = $user_id AND (users.users.username like'%$search%' OR users.users.name like'%$search%'))");
+        }
         while ($row = mysqli_fetch_assoc($result)) {
             $name_in_card = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE user_id =" . $row['borrower_id']))['name'];
         ?>
@@ -61,7 +66,7 @@ if(!$user_id) header("Location:register.php");
 
     <!-- Template -->
     <div class="box" id="template">
-				<div class="error_message"></div>
+        <div class="error_message"></div>
         <button name="remove" id="decrease_button" value="Deduct">Paid</button>
         <button name="add" id="increase_button" value="Add">Borrowed</button>
         <button name="create" id="create_button" value="Create">Create</button>
@@ -96,18 +101,23 @@ if(!$user_id) header("Location:register.php");
                 if (isset($_GET['transaction_id'])) {
                     $id = $_GET['transaction_id'];
                     $res = $transactions->query("select * from transaction where lender_id='$user_id' and borrower_id = '$id' order by dataTime desc");
-										$borrower_id = "NULL";
+                    $borrower_id = "NULL";
                     if (mysqli_num_rows($res)) {
-											// To Edit Borrower Id
-											$borrower_id = strtoupper(mysqli_fetch_assoc($users->query("select * from users where user_id = '$id'"))['name']) . "_" . $id;
+                        // To Edit Borrower Id
+                        $borrower_id = strtoupper(mysqli_fetch_assoc($users->query("select * from users where user_id = '$id'"))['name']) . "_" . $id;
                         while ($rows = mysqli_fetch_assoc($res)) { ?>
                             <div class="transaction_box">
                                 <div class="memo_container">
                                     <div class="memo"><?= ucwords($rows['memo']) ?></div>
                                     <div class="datetime"><?= $rows['dataTime'] ?></div>
                                 </div>
-                                <div class="transaction_amount<?= $rows['type'] ?>">&#8377;<?= $rows['amount'] ?><?php if ($rows['type'] == 'm') echo '<img class="transaction_img" src ="./images/deposit.svg">';
-                                else echo '<img class="transaction_img" src="./images/note_down.svg">'; ?> </div>
+                                <div class="transaction_amount<?= $rows['type'] ?>">
+                                    &#8377;<?= $rows['amount'] ?>
+                                    <?php 
+                                        if ($rows['type'] == 'm') echo '<img class="transaction_img" src ="./images/deposit.svg">';
+                                        else echo '<img class="transaction_img" src="./images/note_down.svg">'; 
+                                    ?> 
+                                </div>
                             </div>
                 <?php }
                     } else echo "<h3 style='color:#ff9945;'>No Transactions</h3>";
@@ -134,28 +144,45 @@ if (isset($_POST["create"])) {
     $memo = $_POST['memo'];
     if (empty($memo)) $memo = 'Borrowed';
     if ($name != "" && $amount != null) {
-        if (mysqli_num_rows($users->query("SELECT * FROM users WHERE username = '$borrower_userid' OR phone = '$borrower_userid'"))) 
-        {
+        if (mysqli_num_rows($users->query("SELECT * FROM users WHERE username = '$borrower_userid' OR phone = '$borrower_userid'"))) {
             $borrower_id = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE phone = '$borrower_userid' OR username = '$borrower_userid'"))['user_id'];
-            if (mysqli_num_rows($totals->query("SELECT * FROM totals WHERE borrower_id = $borrower_id and lender_id=$user_id")))
-              $totals->query("UPDATE totals SET amount = amount + $amount WHERE borrower_id=$borrower_id");
-            else 
-							$totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
-						$transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
-						header("Refresh:0");
-					} 
-					else 
-					{
-						if (is_numeric($borrower_userid)) 
-						{
-							$users->query("INSERT INTO users VALUES(null, null, '$name', '$borrower_userid', null)");
-							$borrower_id = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE phone = $borrower_userid AND name = '$name'"))['user_id'];
-							$totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
-							$transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
-							header("Refresh:0");
-					}
-					else 
-						echo "<script>
+            if(mysqli_num_rows($totals->query("SELECT * FROM totals WHERE borrower_id = $user_id and lender_id=$borrower_id")))
+            {
+                $check_amount = mysqli_fetch_assoc($totals->query("select * from totals where borrower_id=$user_id and lender_id = $borrower_id"))['amount'];
+                if ((int)$check_amount - $amount >= 0) {
+                    if($memo === 'Borrowed') $memo = 'Paid';
+                    if ((int)$check_amount - $amount == 0) $totals->query("delete from totals where borrower_id = $user_id and lender_id = $borrower_id");
+                    else $totals->query("UPDATE totals SET amount= amount-$amount WHERE borrower_id = $user_id and lender_id = $borrower_id");
+                    $transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'm', now())");
+                    header("Location:lenders.php");
+                }
+                else
+                {
+                    $totals->query("delete from totals where borrower_id = $user_id and lender_id = $borrower_id");
+                    $totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, ($amount-$check_amount))");
+                    $transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
+                }
+            }
+            elseif (mysqli_num_rows($totals->query("SELECT * FROM totals WHERE borrower_id = $borrower_id and lender_id=$user_id")))
+            {
+                $totals->query("UPDATE totals SET amount = amount + $amount WHERE borrower_id=$borrower_id");
+                $transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
+            }
+            else
+            {
+                $totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
+                $transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
+            }
+            header("Refresh:0");
+        } else {
+            if (is_numeric($borrower_userid)) {
+                $users->query("INSERT INTO users VALUES(null, null, '$name', '$borrower_userid', null)");
+                $borrower_id = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE phone = $borrower_userid AND name = '$name'"))['user_id'];
+                $totals->query("INSERT INTO totals VALUES($borrower_id, $user_id, $amount)");
+                $transactions->query("INSERT INTO transaction VALUES('$borrower_id', $user_id, $amount, '$memo', 'p', now())");
+                header("Refresh:0");
+            } else
+                echo "<script>
 						createPopup();
 						let error_message = document.querySelector('.error_message');
 						error_message.innerHTML = '\'<span>$borrower_userid</span>\' UserId Doesn\'t Exists<br>Try Phone Number';
@@ -167,8 +194,8 @@ if (isset($_POST["create"])) {
 						},5000);
 						</script>";
         }
-			}
-		} elseif (isset($_POST["remove"])) {
+    }
+} elseif (isset($_POST["remove"])) {
     $id = $_POST['id'];
     $amount = $_POST['amount'];
     $memo = $_POST['memo'];
@@ -176,9 +203,9 @@ if (isset($_POST["create"])) {
     $removeQuery = "update totals set Amount= Amount-{$amount} where borrower_id={$id} and lender_id=$user_id;";
     $check_amount = mysqli_fetch_assoc($totals->query("select Amount from totals where borrower_id={$id}"))['Amount'];
     if ($amount != null) {
-			if ((int)$check_amount - $amount >= 0) {
+        if ((int)$check_amount - $amount >= 0) {
             $transactions->query("INSERT INTO transaction VALUES('$id', $user_id, $amount, '$memo', 'm', now())");
-            if ((int)$check_amount - $amount == 0) $users_borrowers->query("delete from totals where borrower_id = {$id}");
+            if ((int)$check_amount - $amount == 0) $totals->query("delete from totals where borrower_id = {$id} and lender_id=$user_id");
             else mysqli_query($totals, $removeQuery);
             header("Refresh:0");
         }
@@ -197,16 +224,15 @@ if (isset($_POST["create"])) {
 }
 
 if (isset($_GET['delId'])) {
-	$id = $_GET['delId'];
+    $id = $_GET['delId'];
     $amount = mysqli_fetch_assoc($totals->query("SELECT * FROM totals WHERE borrower_id = $id AND lender_id = $user_id"))['amount'];
     $transactions->query("INSERT INTO transaction VALUES('$id', $user_id, $amount, 'paid', 'm', now())");
     $totals->query("delete from totals where borrower_id={$id} and lender_id = $user_id");
     header("Location:main.php");
-	}
-	
-	if (isset($_GET['logout'])) {
-		session_unset();
-        header("Location:index.php");
-	}
-	ob_end_flush();
-	?>
+}
+
+if (isset($_GET['logout'])) {
+    session_unset();
+    header("Location:index.php");
+}
+ob_end_flush();

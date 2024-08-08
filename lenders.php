@@ -3,41 +3,46 @@ ob_start();
 session_start();
 require_once('data.php');
 $user_id = $_SESSION['logged_in'];
-if(!$user_id) header("Location:register.php");
+if (!$user_id) header("Location:register.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Khata</title>
-        <link rel="stylesheet" href="styles/lender.css">
-        <link rel="stylesheet" href="styles/style.css">
-    </head>
-    
-    <body id="body">
-        <?php include("navbar.php"); ?>
-        <!-- Main Content -->
-        <div class="switch_button">
-            <button class="borrower_page_button" onclick="window.location.href='main.php'">Borrowers</button>
-            <button class="lender_page_button">Lenders</button>
-        </div>
-        <div class="container" id="container">
-            <?php 
-            $result = $totals->query("SELECT * FROM totals WHERE borrower_id = '$user_id'");
-            if(mysqli_num_rows($result)){
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khata</title>
+    <link rel="stylesheet" href="styles/lender.css">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body id="body">
+    <?php include("navbar.php"); ?>
+    <!-- Main Content -->
+    <div class="switch_button">
+        <button class="borrower_page_button" onclick="window.location.href='main.php'">Borrowers</button>
+        <button class="lender_page_button">Lenders</button>
+    </div>
+    <div class="container" id="container">
+        <?php
+        $result = $totals->query("SELECT * FROM totals WHERE borrower_id = '$user_id'");
+        if (mysqli_num_rows($result)) {
+            if (isset($_GET['search'])) {
+                $search = $_GET['search'];
+                $result = $check->query("SELECT users.users.name, totals.totals.lender_id, totals.totals.amount FROM users.users JOIN totals.totals ON (totals.totals.lender_id = users.users.user_id AND totals.totals.borrower_id = $user_id AND (users.users.username like'%$search%' OR users.users.name like'%$search%'))");
+                echo "";
+            }
             while ($row = mysqli_fetch_assoc($result)) {
-            $name_in_card = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE user_id =" .$row['lender_id']))['name'];
-            ?>
-            <div class="box" id="box<?= $row['lender_id'] ?>" ondblclick="showTransaction(event, this.id.slice(3))">
-                <h3 class="name"><?php echo strtoupper($name_in_card) ?></h3>
-                <h2 id="amount">&#8377;<?php echo strtoupper($row['amount']) ?></h2>
-                <button class="pay_button" id="<?php echo $row['lender_id'] ?>">Pay</button>
-            </div>
-        <?php }}
-        else echo "<p style='color:var(--color6); font-size:1rem; width:100%; text-align:center;'>NOT ANY LENDER</p>";
-         ?>
+                $name_in_card = mysqli_fetch_assoc($users->query("SELECT * FROM users WHERE user_id =" . $row['lender_id']))['name'];
+        ?>
+                <div class="box" id="box<?= $row['lender_id'] ?>" ondblclick="showTransaction(event, this.id.slice(3))">
+                    <h3 class="name"><?php echo strtoupper($name_in_card) ?></h3>
+                    <h2 id="amount">&#8377;<?php echo strtoupper($row['amount']) ?></h2>
+                    <button class="pay_button" id="<?php echo $row['lender_id'] ?>">Pay</button>
+                </div>
+        <?php }
+        } else echo "<p style='color:var(--color6); font-size:1rem; width:100%; text-align:center;'>NOT ANY LENDER</p>";
+        ?>
     </div>
 
     <!-- Template -->
@@ -69,10 +74,10 @@ if(!$user_id) header("Location:register.php");
             <div class="borrower_id"></div>
             <h2>Transactions</h2>
             <div class="transactions_table">
-            <?php
+                <?php
                 if (isset($_GET['transaction_id'])) {
                     $id = $_GET['transaction_id'];
-                    $res = $transactions->query("select * from transaction where lender_id='$id' and borrower_id = '$user_id' order by dataTime desc");
+                    $res = $transactions->query("SELECT * FROM transaction WHERE (lender_id='$id' AND borrower_id = '$user_id') OR (lender_id='$user_id' AND borrower_id = '$id') ORDER BY dataTime DESC");
                     $borrower_id = "";
                     if (mysqli_num_rows($res)) {
                         // To Edit Borrower Id
@@ -153,7 +158,7 @@ if (isset($_GET['delId'])) {
 }
 
 if (isset($_GET['logout'])) {
-    $logged_in->query("DELETE FROM USERNAME WHERE USERNAME = '$table'");
+    session_unset();
     header("Location:index.php");
 }
 ob_end_flush();
